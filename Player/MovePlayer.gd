@@ -61,13 +61,11 @@ func direction2str(direction):
 # Virtual function. Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	print_debug("Entre a move")
 	pass
 
 # Virtual function. Called by the state machine before changing the active state. Use this function
 # to clean up the state.
 func exit() -> void:
-	print_debug("sali de move")
 	pass
 
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Machines/PowerMachine.tscn" type="PackedScene" id=3]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -15,7 +14,4 @@ format = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
-[node name="PowerPlant" parent="." instance=ExtResource( 3 )]
-modulate = Color( 0.211765, 0.0941176, 0.0941176, 1 )
-position = Vector2( 48, -19 )
-scale = Vector2( 0.546875, 0.546875 )
+[connection signal="build_power_plant" from="Player" to="." method="_on_Player_build_power_plant"]

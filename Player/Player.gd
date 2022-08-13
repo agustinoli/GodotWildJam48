@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal build_power_plant
 signal hp_changed
 
 export var MAX_HP = 100
@@ -44,6 +45,15 @@ func _ready():
 	pass
 
 func _process(_delta):
+	if $StateMachine.state.name == "Idle":
+		if Input.is_action_pressed("BuildPowerMachine"):
+			if GameController.player_has_resources(0, 0, 0, 100):
+				emit_signal("build_power_plant")
+				GameController.spend_resources(0, 0, 0, 100)
+				$StateMachine.transition_to("Build")
+			else:
+				# insert error sound here
+				pass
 	pass
 
 func parse_input():

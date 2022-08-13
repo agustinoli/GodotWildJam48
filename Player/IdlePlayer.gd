@@ -16,7 +16,6 @@ func update(_delta: float) -> void:
 		state_machine.transition_to("Move")
 
 
-
 # Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:
 	pass
