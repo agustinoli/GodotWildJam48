@@ -17,6 +17,10 @@ func handle_input(_event: InputEvent) -> void:
 # Virtual function. Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
 	pass
+#	if boton_construccion.pressed:
+#		if Level.is_terrain_good():
+#			if GameController.player_has_resources():
+#				player.construct()
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:
