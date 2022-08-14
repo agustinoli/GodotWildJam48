@@ -32,15 +32,15 @@ frames = SubResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource( 4 )
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node2D" parent="StateMachine"]
 script = ExtResource( 5 )
 
-[node name="Build" type="Node" parent="StateMachine"]
+[node name="Build" type="Node2D" parent="StateMachine"]
 script = ExtResource( 6 )
 
-[node name="Move" type="Node" parent="StateMachine"]
+[node name="Move" type="Node2D" parent="StateMachine"]
 script = ExtResource( 3 )

@@ -15,7 +15,7 @@ func handle_input(_event: InputEvent) -> void:
 
 
 # Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
+func fsm_update(_delta: float) -> void:
 	state_machine.transition_to("Idle")
 	pass
 
