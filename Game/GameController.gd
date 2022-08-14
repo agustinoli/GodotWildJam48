@@ -21,6 +21,7 @@ var player_resources setget set_player_resources, get_player_resources
 
 func _ready():
 	player_resources = INITIAL_RESOURCES
+	print_debug("hola")
 	log_player_resources()
 
 
