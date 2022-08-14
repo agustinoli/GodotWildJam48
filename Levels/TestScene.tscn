@@ -14,4 +14,5 @@ format = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
-[connection signal="build_power_plant" from="Player" to="." method="_on_Player_build_power_plant"]
+[connection signal="build_mineral_machine" from="Player" to="." method="_on_Player_build_mineral_machine"]
+[connection signal="build_power_machine" from="Player" to="." method="_on_Player_build_power_machine"]

@@ -5,17 +5,13 @@ const INIT_WATER = 0
 const INIT_FOOD  = 0
 const INIT_MINE  = 100
 
+const POWER_MACHINE = 0
+const MINERAL_MACHINE = 1
+
 var player_power       : int setget set_power, get_power
 var player_water       : int setget set_water,get_water
 var player_food        : int setget set_food,get_food
 var player_mine        : int setget set_mine,get_mine
-
-var power_delta
-var water_delta
-var food_delta
-var mine_delta
-
-var delta_timer
 
 
 func _ready():
@@ -23,17 +19,6 @@ func _ready():
 	player_water = INIT_WATER
 	player_food  = INIT_FOOD
 	player_mine  = INIT_MINE
-	power_delta  = 0
-	water_delta  = 0
-	food_delta   = 0
-	mine_delta   = 0
-	delta_timer  = Timer.new()
-	delta_timer.set_one_shot(false)
-	delta_timer.set_wait_time(1)
-	delta_timer.autostart = true
-	delta_timer.connect("timeout", self, "_timer_callback")
-	delta_timer.start()
-	add_child(delta_timer)
 
 
 func set_power(p_ele):
@@ -78,14 +63,26 @@ func spend_resources(power_cost,food_cost,water_cost,mine_cost)->void:
 	player_water -= water_cost
 	player_mine  -= mine_cost
 
+func gain_resources(power_gain, food_gain, water_gain, mine_gain)->void:
+	player_power += power_gain
+	player_food  += food_gain
+	player_water += water_gain
+	player_mine  += mine_gain
 
-func _timer_callback():
+func can_build_machine(machine_type):
+	match machine_type:
+		POWER_MACHINE:
+			return player_has_resources(0, 0, 0, 40)
+		MINERAL_MACHINE:
+			return player_has_resources(70, 0, 0, 60)
+
+func build_machine(machine_type):
+	match machine_type:
+		POWER_MACHINE:
+			spend_resources(0, 0, 0, 40)
+			gain_resources(100, 0, 0, 0)
+		MINERAL_MACHINE:
+			spend_resources(70, 0, 0, 0)
+			gain_resources(0, 0, 0, 50)
+	
 	print(str("Power = ", player_power, " | Food = ", player_food, " | Water = ", player_water, " | Mineral = ", player_mine))
-	player_power += power_delta
-	player_food  += food_delta
-	player_water += water_delta
-	player_mine  += mine_delta
-
-
-func power_plant_created():
-	power_delta += 1

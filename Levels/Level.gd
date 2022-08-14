@@ -2,7 +2,8 @@ extends Node2D
 
 export (String, FILE, "*.tscn") var Next_Scene: String
 
-var power_plant_scene = preload("res://Machines/PowerMachine.tscn")
+var power_machine_scene = preload("res://Machines/PowerMachine.tscn")
+var mineral_machine_scene = preload("res://Machines/MineralMachine.tscn")
 
 func _ready()->void:
 	Hud.visible = true
@@ -17,8 +18,13 @@ func _exit_tree()->void:
 	PauseMenu.can_show = false
 
 
-func _on_Player_build_power_plant():
-	var power_plant = power_plant_scene.instance()
-	add_child(power_plant)
-	power_plant.init($Player.position + Vector2(0, 50))
-	GameController.power_plant_created()
+func _on_Player_build_power_machine():
+	var power_machine = power_machine_scene.instance()
+	add_child(power_machine)
+	power_machine.init($Player.position + Vector2(0, 50))
+
+
+func _on_Player_build_mineral_machine():
+	var mineral_machine = mineral_machine_scene.instance()
+	add_child(mineral_machine)
+	mineral_machine.init($Player.position + Vector2(0, 50))
