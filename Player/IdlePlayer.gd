@@ -20,7 +20,7 @@ func fsm_update(_delta: float) -> void:
 			ghost.set_machine(GameController.POWER_MACHINE)
 			ghost.set_position(get_local_mouse_position())
 			self.get_tree().get_current_scene().add_child(ghost)
-	elif Input.is_action_just_pressed("ui_cancel"):
+	elif Input.is_action_just_pressed("cancel_building"):
 			if ghost:
 				ghost.queue_free()
 	elif Input.is_action_just_pressed("BuildPowerMachine"):

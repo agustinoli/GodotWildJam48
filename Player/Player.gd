@@ -43,9 +43,9 @@ func _ready():
 	pass
 
 func _process(_delta):
-	if Input.is_action_just_released("zoom_out"):
+	if Input.is_action_just_released("zoom_in"):
 		$Camera2D.set_zoom($Camera2D.get_zoom()+Vector2(0.1,0.1))
-	elif Input.is_action_just_released("zoom_in"):
+	elif Input.is_action_just_released("zoom_out"):
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
 
 
