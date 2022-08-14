@@ -9,7 +9,7 @@ var machine_textures = [
 	preload("res://icon.png"),
 	preload("res://icon.png"),
 	preload("res://icon.png"),
-]
+	]
 
 
 func _ready():

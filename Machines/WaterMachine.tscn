@@ -14,7 +14,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=2]
 radius = 32.0
 
-[node name="PowerPlant" type="StaticBody2D"]
+[node name="WaterMachine" type="StaticBody2D"]
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
