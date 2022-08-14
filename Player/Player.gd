@@ -44,25 +44,6 @@ func get_animationSprite () -> Node:
 func _ready():
 	pass
 
-func _process(_delta):
-	if $StateMachine.state.name == "Idle":
-		if Input.is_action_just_pressed("BuildPowerMachine"):
-			if GameController.can_build_machine(GameController.POWER_MACHINE):
-				GameController.build_machine(GameController.POWER_MACHINE)
-				$StateMachine.transition_to("Build")
-				emit_signal("build_power_machine")
-			else:
-				# insert error sound here
-				pass
-		elif Input.is_action_just_pressed("BuildMineralMachine"):
-			if GameController.can_build_machine(GameController.MINERAL_MACHINE):
-				GameController.build_machine(GameController.MINERAL_MACHINE)
-				$StateMachine.transition_to("Build")
-				emit_signal("build_mineral_machine")
-			else:
-				# insert error sound here
-				pass
-	pass
 
 func parse_input():
 	pass

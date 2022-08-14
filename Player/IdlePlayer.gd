@@ -11,9 +11,24 @@ func handle_input(_event: InputEvent) -> void:
 
 # Virtual function. Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
-	player.parse_input()
 	if Input.is_action_pressed("Left") or Input.is_action_pressed("Up") or Input.is_action_pressed("Right") or Input.is_action_pressed("Down"):
 		state_machine.transition_to("Move")
+	elif Input.is_action_just_pressed("BuildPowerMachine"):
+		if GameController.can_build_machine(GameController.POWER_MACHINE):
+			GameController.build_machine(GameController.POWER_MACHINE)
+			state_machine.transition_to("Build")
+			player.emit_signal("build_power_machine")
+		else:
+			# insert error sound here
+			pass
+	elif Input.is_action_just_pressed("BuildMineralMachine"):
+		if GameController.can_build_machine(GameController.MINERAL_MACHINE):
+			GameController.build_machine(GameController.MINERAL_MACHINE)
+			state_machine.transition_to("Build")
+			player.emit_signal("build_mineral_machine")
+		else:
+			# insert error sound here
+			pass
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
