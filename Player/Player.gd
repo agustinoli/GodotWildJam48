@@ -8,9 +8,6 @@ export var MAX_HP = 100
 export var NORMAL_SPEED = 3
 export var speed_boost_scale = 2
 
-const POWER_MACHINE = 0
-const MINERAL_MACHINE = 1
-
 var speed = NORMAL_SPEED
 var hp = MAX_HP
 
@@ -50,16 +47,16 @@ func _ready():
 func _process(_delta):
 	if $StateMachine.state.name == "Idle":
 		if Input.is_action_just_pressed("BuildPowerMachine"):
-			if GameController.can_build_machine(POWER_MACHINE):
-				GameController.build_machine(POWER_MACHINE)
+			if GameController.can_build_machine(GameController.POWER_MACHINE):
+				GameController.build_machine(GameController.POWER_MACHINE)
 				$StateMachine.transition_to("Build")
 				emit_signal("build_power_machine")
 			else:
 				# insert error sound here
 				pass
 		elif Input.is_action_just_pressed("BuildMineralMachine"):
-			if GameController.can_build_machine(MINERAL_MACHINE):
-				GameController.build_machine(MINERAL_MACHINE)
+			if GameController.can_build_machine(GameController.MINERAL_MACHINE):
+				GameController.build_machine(GameController.MINERAL_MACHINE)
 				$StateMachine.transition_to("Build")
 				emit_signal("build_mineral_machine")
 			else:
