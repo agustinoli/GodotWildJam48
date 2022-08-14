@@ -27,7 +27,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	state.update(delta)
+	state.fsm_update(delta)
 
 
 func _physics_process(delta: float) -> void:
