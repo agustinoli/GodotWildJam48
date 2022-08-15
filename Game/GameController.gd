@@ -1,73 +1,107 @@
 extends Node
 
 const POWER_MACHINE   = 0
-const WATER_MACHINE   = 1
-const FOOD_MACHINE    = 2
-const MINERAL_MACHINE = 3
+const MINERAL_MACHINE = 1
+const WATER_MACHINE   = 2
+const FOOD_MACHINE    = 3
 
-#                              P,  W, F, M
-const INITIAL_RESOURCES    = [ 0,  0, 0, 100 ]
+#                                      P  M    W  F
+const INITIAL_RESOURCES            = [ 0, 100, 0, 0 ]
+const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0 ]
 
-#                              P,  W, F, M
-const POWER_MACHINE_COST   = [ 0,  0, 0, 40  ]
-const MINERAL_MACHINE_COST = [ 70, 0, 0, 60  ]
+const RESOURCES_MAX                = [ 200, 200, 200 ,200 ]
+const RESOURCES_MIN                = [ 0, 0, 0 ,0 ]
 
-#                              P,   W, F, M
-const POWER_MACHINE_GAIN   = [ 100, 0, 0, 0  ]
-const MINERAL_MACHINE_GAIN = [ 0,   0, 0, 50 ]
+const POWER_MACHINE_STATIC_COST    = [ 0, 40, 0, 0 ]
+const POWER_MACHINE_DYNAMIC_COST   = [ 0, 0,  0, 0 ]
+const MINERAL_MACHINE_STATIC_COST  = [ 0, 20, 0, 0 ]
+const MINERAL_MACHINE_DYNAMIC_COST = [ 1, 0,  0, 0 ]
 
-var player_resources setget set_player_resources, get_player_resources
+const POWER_MACHINE_DYNAMIC_GAIN   = [ 2, 0, 0, 0 ]
+const POWER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0 ]
+const MINERAL_MACHINE_DYNAMIC_GAIN = [ 0, 1, 0, 0 ]
+const MINERAL_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
 
+var resources
+var resources_delta
 
 func _ready():
-	player_resources = INITIAL_RESOURCES
-	print_debug("hola")
-	log_player_resources()
-
-
-func set_player_resources(new_player_resources):
-	player_resources = new_player_resources
-
-
-func get_player_resources():
-	return player_resources
+	resources       = INITIAL_RESOURCES
+	resources_delta = INITIAL_RESOURCES_DELTA
+	
+	var timer
+	timer = Timer.new()
+	timer.set_one_shot(false)
+	timer.set_wait_time(1)
+	timer.connect("timeout", self, "_timer_callback")
+	timer.autostart = true
+	add_child(timer)
 
 
 func player_has_resources(wanted_resources)->bool:
 	for res in 4:
-		if wanted_resources[res] > player_resources[res]:
+		if wanted_resources[res] > resources[res]:
 			return false
 	return true
 
 
 func spend_resources(spended_resources)->void:
 	for res in 4:
-		player_resources[res] -= spended_resources[res]
+		resources[res] -= spended_resources[res]
+		if(resources[res] < RESOURCES_MIN[res]):
+			resources[res] = RESOURCES_MIN[res]
 
 
 func gain_resources(gained_resources)->void:
 	for res in 4:
-		player_resources[res] += gained_resources[res]
+		resources[res] += gained_resources[res]
+		if(resources[res] > RESOURCES_MAX[res]):
+			resources[res] = RESOURCES_MAX[res]
+		if(resources[res] < RESOURCES_MIN[res]): # Esto debido a los deltas
+			resources[res] = RESOURCES_MIN[res]
 
 
 func can_build_machine(machine_type):
 	match machine_type:
 		POWER_MACHINE:
-			return player_has_resources(POWER_MACHINE_COST)
+			return player_has_resources(POWER_MACHINE_STATIC_COST)
 		MINERAL_MACHINE:
-			return player_has_resources(MINERAL_MACHINE_COST)
+			return player_has_resources(MINERAL_MACHINE_STATIC_COST)
+
+
+func add_dynamic_gain(new_gain):
+	for res in 4:
+		resources_delta[res] += new_gain[res]
+
+func add_dynamic_cost(new_cost):
+	for res in 4:
+		resources_delta[res] -= new_cost[res]
 
 
 func build_machine(machine_type):
 	match machine_type:
 		POWER_MACHINE:
-			spend_resources(POWER_MACHINE_COST)
-			gain_resources(POWER_MACHINE_GAIN)
+			spend_resources(POWER_MACHINE_STATIC_COST)
+			gain_resources(POWER_MACHINE_STATIC_GAIN)
+			add_dynamic_cost(POWER_MACHINE_DYNAMIC_COST)
+			add_dynamic_gain(POWER_MACHINE_DYNAMIC_GAIN)
 		MINERAL_MACHINE:
-			spend_resources(MINERAL_MACHINE_COST)
-			gain_resources(MINERAL_MACHINE_GAIN)
+			spend_resources(MINERAL_MACHINE_STATIC_COST)
+			gain_resources(MINERAL_MACHINE_STATIC_GAIN)
+			add_dynamic_cost(MINERAL_MACHINE_DYNAMIC_COST)
+			add_dynamic_gain(MINERAL_MACHINE_DYNAMIC_GAIN)
+
+
+func _timer_callback():
+	if resources_delta[0] >= 0: # Si hay deficit de looz, las maquinas no producen
+		gain_resources(resources_delta)
+	Hud.set_values(resources)
 	log_player_resources()
 
 
 func log_player_resources():
-	print(str("Power = ", player_resources[0], " | Food = ", player_resources[2], " | Water = ", player_resources[1], " | Mineral = ", player_resources[3]))
+	print(str(	"Power = ", resources[0], " (", resources_delta[0], "/s) | ",
+				"Mineral = ", resources[1], " (", resources_delta[1], "/s) | ",
+				"Water = ", resources[2], " (", resources_delta[2], "/s) | ",
+				"Food = ", resources[3], " (", resources_delta[3], "/s)"
+				))
