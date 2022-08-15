@@ -99,3 +99,16 @@ margin_top = 1.0
 margin_right = 188.0
 margin_bottom = 15.0
 text = "200"
+
+[node name="PlayerPowerIcon" type="TextureRect" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
+margin_left = 192.0
+margin_right = 208.0
+margin_bottom = 16.0
+texture = ExtResource( 1 )
+
+[node name="PlayerPowerNum" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
+margin_left = 212.0
+margin_top = 1.0
+margin_right = 236.0
+margin_bottom = 15.0
+text = "100"

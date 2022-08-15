@@ -3,12 +3,11 @@ extends KinematicBody2D
 
 signal hp_changed
 
-export var MAX_HP = 100
+export var MAX_POWER = 100
 export var NORMAL_SPEED = 3
-export var speed_boost_scale = 2
 
 var speed = NORMAL_SPEED
-var hp = MAX_HP
+var power = MAX_POWER
 
 var directions = ["Right", "RightDown", "Down", "LeftDown", "Left", "LeftUp", "Up", "RightUp"]
 var current_direction: String = "Down" setget set_current_dir, get_current_dir
