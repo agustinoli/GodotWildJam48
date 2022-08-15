@@ -35,7 +35,6 @@ mouse_filter = 2
 
 [node name="Bg" type="ColorRect" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer"]
 margin_right = 312.0
-margin_bottom = 24.0
 color = Color( 0.0784314, 0.133333, 0.25098, 1 )
 
 [node name="Top" type="HBoxContainer" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer"]
@@ -46,7 +45,6 @@ mouse_filter = 2
 
 [node name="MineralIcon" type="TextureRect" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
 modulate = Color( 0.219608, 0.164706, 0.164706, 1 )
-margin_left = 4.0
 margin_right = 16.0
 margin_bottom = 16.0
 size_flags_horizontal = 0

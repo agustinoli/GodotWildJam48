@@ -95,6 +95,7 @@ func build_machine(machine_type):
 func _timer_callback():
 	if resources_delta[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 		gain_resources(resources_delta)
+	Hud.set_values(resources)
 	log_player_resources()
 
 
