@@ -1,9 +1,9 @@
 extends Node
 
-onready var mineral: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/HP/MineralNum
-onready var power: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/HP/PowerNum
-onready var food: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/HP/FoodNum
-onready var water: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/HP/WaterNum
+onready var mineral: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/MineralNum
+onready var power: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/PowerNum
+onready var food: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/FoodNum
+onready var water: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/WaterNum
 onready var gui: = $CanvasLayer/GUI
 
 var visible: = false setget set_visible
