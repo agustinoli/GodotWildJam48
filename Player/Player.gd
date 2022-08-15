@@ -38,7 +38,8 @@ func get_animationSprite () -> Node:
 
 
 func _ready():
-	pass
+	Hud.set_player_power(power)
+
 
 func _process(_delta):
 	if Input.is_action_just_released("zoom_in"):
