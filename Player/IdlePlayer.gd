@@ -13,20 +13,17 @@ func handle_input(_event: InputEvent) -> void:
 
 # Virtual function. Corresponds to the `_process()` callback.
 func fsm_update(_delta: float) -> void:
-	if Input.is_action_pressed("Left") or Input.is_action_pressed("Up") or Input.is_action_pressed("Right") or Input.is_action_pressed("Down"):
+	if Input.is_action_pressed("Left") or Input.is_action_pressed("Up") \
+		or Input.is_action_pressed("Right") or Input.is_action_pressed("Down"):
 		state_machine.transition_to("Move")
 	elif Input.is_action_just_pressed("BuildPowerMachine"):
-		if ghost == null:
-			ghost = ghostMachineScene.instance()
-			ghost.set_machine(GameController.POWER_MACHINE)
-			ghost.set_position(get_local_mouse_position())
-			self.get_tree().get_current_scene().add_child(ghost)
+		make_ghost(GameController.POWER_MACHINE)
 	elif Input.is_action_just_pressed("BuildMineralMachine"):
-		if ghost == null:
-			ghost = ghostMachineScene.instance()
-			ghost.set_machine(GameController.MINERAL_MACHINE)
-			ghost.set_position(get_local_mouse_position())
-			self.get_tree().get_current_scene().add_child(ghost)
+		make_ghost(GameController.MINERAL_MACHINE)
+#	elif Input.is_action_just_pressed("BuildFoodMachine"):
+#		make_ghost(GameController.FOOD_MACHINE)
+#	elif Input.is_action_just_pressed("BuildWaterMachine"):
+#		make_ghost(GameController.WATER_MACHINE)
 	elif Input.is_action_just_pressed("cancel_building"):
 			if ghost:
 				ghost.queue_free()
@@ -49,6 +46,14 @@ func enter(_msg := {}) -> void:
 # to clean up the state.
 func exit() -> void:
 	pass
+
+
+func make_ghost(machine):
+	if ghost == null:
+		ghost = ghostMachineScene.instance()
+		ghost.set_machine(machine)
+		ghost.set_position(get_local_mouse_position())
+		self.get_tree().get_current_scene().add_child(ghost)
 
 
 func set_ghost_to_null():
