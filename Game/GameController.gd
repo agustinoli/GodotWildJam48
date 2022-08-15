@@ -10,17 +10,26 @@ const INITIAL_RESOURCES            = [ 0, 100, 0, 0 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0 ]
 
 const RESOURCES_MAX                = [ 200, 200, 200 ,200 ]
-const RESOURCES_MIN                = [ 0, 0, 0 ,0 ]
+const RESOURCES_MIN                = [ -1, 0, 0 ,0 ]
 
 const POWER_MACHINE_STATIC_COST    = [ 0, 40, 0, 0 ]
 const POWER_MACHINE_DYNAMIC_COST   = [ 0, 0,  0, 0 ]
 const MINERAL_MACHINE_STATIC_COST  = [ 0, 20, 0, 0 ]
 const MINERAL_MACHINE_DYNAMIC_COST = [ 1, 0,  0, 0 ]
+const WATER_MACHINE_STATIC_COST    = [ 0, 100, 0, 0 ]
+const WATER_MACHINE_DYNAMIC_COST   = [ 5, 1,  0, 0 ]
+const FOOD_MACHINE_STATIC_COST     = [ 0, 50, 100, 0 ]
+const FOOD_MACHINE_DYNAMIC_COST    = [ 1, 0,  0, 0 ]
 
 const POWER_MACHINE_DYNAMIC_GAIN   = [ 2, 0, 0, 0 ]
 const POWER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0 ]
 const MINERAL_MACHINE_DYNAMIC_GAIN = [ 0, 1, 0, 0 ]
 const MINERAL_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
+const WATER_MACHINE_DYNAMIC_GAIN   = [ 0, 0, 1, 0 ]
+const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0 ]
+const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1 ]
+const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
+
 
 var resources
 var resources_delta
@@ -67,6 +76,10 @@ func can_build_machine(machine_type):
 			return player_has_resources(POWER_MACHINE_STATIC_COST)
 		MINERAL_MACHINE:
 			return player_has_resources(MINERAL_MACHINE_STATIC_COST)
+		WATER_MACHINE:
+			return player_has_resources(WATER_MACHINE_STATIC_COST)
+		FOOD_MACHINE:
+			return player_has_resources(FOOD_MACHINE_STATIC_COST)
 
 
 func add_dynamic_gain(new_gain):
@@ -90,10 +103,20 @@ func build_machine(machine_type):
 			gain_resources(MINERAL_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(MINERAL_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(MINERAL_MACHINE_DYNAMIC_GAIN)
+		WATER_MACHINE:
+			spend_resources(WATER_MACHINE_STATIC_COST)
+			gain_resources(WATER_MACHINE_STATIC_GAIN)
+			add_dynamic_cost(WATER_MACHINE_DYNAMIC_COST)
+			add_dynamic_gain(WATER_MACHINE_DYNAMIC_GAIN)
+		FOOD_MACHINE:
+			spend_resources(FOOD_MACHINE_STATIC_COST)
+			gain_resources(FOOD_MACHINE_STATIC_GAIN)
+			add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
+			add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)
 
 
 func _timer_callback():
-	if resources_delta[0] >= 0: # Si hay deficit de looz, las maquinas no producen
+	if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 		gain_resources(resources_delta)
 	Hud.set_values(resources)
 	log_player_resources()

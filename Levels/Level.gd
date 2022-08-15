@@ -5,8 +5,8 @@ export (String, FILE, "*.tscn") var Next_Scene: String
 var machines_scenes = [
 	preload("res://Machines/PowerMachine.tscn"),
 	preload("res://Machines/MineralMachine.tscn"),
-	preload("res://Machines/FoodMachine.tscn"),
-	preload("res://Machines/WaterMachine.tscn")
+	preload("res://Machines/WaterMachine.tscn"),
+	preload("res://Machines/FoodMachine.tscn")
 	]
 
 func _ready()->void:
