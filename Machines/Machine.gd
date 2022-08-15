@@ -2,13 +2,21 @@ extends Node
 
 class_name Machine
 
-var resource_type
+var smoke_scene = preload("res://Particles/Smoke.tscn")
 
+var resource_type
+var smoke
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.visible = false
-	pass # Replace with function body.
+	
+	smoke = smoke_scene.instance()
+	smoke.one_shot = true
+	smoke.lifetime = 0.3
+	smoke.amount = 10
+	add_child(smoke)
+	
 
 func init(init_pos):
 	self.position = init_pos
