@@ -11,7 +11,7 @@ var machines_scenes = [
 
 func _ready()->void:
 	Hud.visible = true
-	Hud.visible = true
+	SfxManager.play("moon")
 	PauseMenu.can_show = true
 
 func _on_Button_pressed()->void:

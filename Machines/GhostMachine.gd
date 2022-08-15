@@ -28,5 +28,5 @@ func _process(_delta):
 			emit_signal("build_machine",get_global_mouse_position(),machine)
 			queue_free()
 		else:
+#			SfxManager.play("file_name_without_extension")
 			pass
-			# insert error sound here

@@ -24,10 +24,6 @@ func fsm_update(_delta: float) -> void:
 		make_ghost(GameController.WATER_MACHINE)
 	elif Input.is_action_just_pressed("BuildFoodMachine"):
 		make_ghost(GameController.FOOD_MACHINE)
-#	elif Input.is_action_just_pressed("BuildFoodMachine"):
-#		make_ghost(GameController.FOOD_MACHINE)
-#	elif Input.is_action_just_pressed("BuildWaterMachine"):
-#		make_ghost(GameController.WATER_MACHINE)
 	elif Input.is_action_just_pressed("cancel_building"):
 			if ghost:
 				ghost.queue_free()

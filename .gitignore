@@ -7,6 +7,10 @@ debug.log
 # Imported translations (automatically generated from CSV files)
 *.translation
 
+
+# Ignored files that might me used
+.gitignored/
+
 # Mono-specific ignores
 .mono/
 data_*/
