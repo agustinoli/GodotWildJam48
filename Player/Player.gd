@@ -1,7 +1,6 @@
 extends KinematicBody2D
 
-signal build_power_machine
-signal build_mineral_machine
+
 signal hp_changed
 
 export var MAX_HP = 100

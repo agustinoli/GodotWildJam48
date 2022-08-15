@@ -15,30 +15,22 @@ func handle_input(_event: InputEvent) -> void:
 func fsm_update(_delta: float) -> void:
 	if Input.is_action_pressed("Left") or Input.is_action_pressed("Up") or Input.is_action_pressed("Right") or Input.is_action_pressed("Down"):
 		state_machine.transition_to("Move")
-	# elif Input.is_action_just_pressed("BuildPowerMachine"):
-	# 		ghost = ghostMachineScene.instance()
-	# 		ghost.set_machine(GameController.POWER_MACHINE)
-	# 		ghost.set_position(get_local_mouse_position())
-	# 		self.get_tree().get_current_scene().add_child(ghost)
-	# elif Input.is_action_just_pressed("cancel_building"):
-	# 		if ghost:
-	# 			ghost.queue_free()
 	elif Input.is_action_just_pressed("BuildPowerMachine"):
-		if GameController.can_build_machine(GameController.POWER_MACHINE):
-			GameController.build_machine(GameController.POWER_MACHINE)
-			state_machine.transition_to("Build")
-			player.emit_signal("build_power_machine")
-		else:
-			# insert error sound here
-			pass
+		if ghost == null:
+			ghost = ghostMachineScene.instance()
+			ghost.set_machine(GameController.POWER_MACHINE)
+			ghost.set_position(get_local_mouse_position())
+			self.get_tree().get_current_scene().add_child(ghost)
 	elif Input.is_action_just_pressed("BuildMineralMachine"):
-		if GameController.can_build_machine(GameController.MINERAL_MACHINE):
-			GameController.build_machine(GameController.MINERAL_MACHINE)
-			state_machine.transition_to("Build")
-			player.emit_signal("build_mineral_machine")
-		else:
-			# insert error sound here
-			pass
+		if ghost == null:
+			ghost = ghostMachineScene.instance()
+			ghost.set_machine(GameController.MINERAL_MACHINE)
+			ghost.set_position(get_local_mouse_position())
+			self.get_tree().get_current_scene().add_child(ghost)
+	elif Input.is_action_just_pressed("cancel_building"):
+			if ghost:
+				ghost.queue_free()
+				set_ghost_to_null()
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
@@ -57,3 +49,7 @@ func enter(_msg := {}) -> void:
 # to clean up the state.
 func exit() -> void:
 	pass
+
+
+func set_ghost_to_null():
+	ghost = null
