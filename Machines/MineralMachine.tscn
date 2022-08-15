@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Machines/MineralMachine.gd" type="Script" id=1]
-[ext_resource path="res://Machines/MineralMachine.png" type="Texture" id=2]
+[ext_resource path="res://Machines/Machine.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Images/Machines/Mineral.png" type="Texture" id=2]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -12,10 +12,13 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 32.0
+radius = 18.0
 
 [node name="MineralMachine" type="StaticBody2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )

@@ -6,7 +6,7 @@ const WATER_MACHINE   = 2
 const FOOD_MACHINE    = 3
 
 #                                      P  M    W  F
-const INITIAL_RESOURCES            = [ 0, 100, 0, 0 ]
+const INITIAL_RESOURCES            = [ 200, 200, 200, 200 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0 ]
 
 const RESOURCES_MAX                = [ 200, 200, 200 ,200 ]
