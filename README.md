@@ -26,8 +26,8 @@ Template made for [Godot Wild Jam](https://godotwildjam.com/)
 ## How to use
 
 - Enable GameTemplate plugin in Project Settings. It will set up all necessary autoloads automatically;
-- Edit SettingsControls.gd (inside Autoload directory) Actions array of input map names. They are the ones uned in button remapping.
-- To change scenes trigger signal: ` Game.emit_signal('change_scene', scene_file_location_string)`
+- Edit SettingsControls.gd (inside Autoload directory) Actions array of input map names. They are the ones used in button remapping.
+- To change scenes trigger signal: ` Game.emit_signal('ChangeScene', scene_file_location_string)`
 - All `wav` files in `addons/Assests/Sounds` folder are loaded to SfxManager singleton and may be triggered with: `SfxManager.play("file_name_without_extension")`
 - To enable/disable HUD your levels set: `Hud.visible = true `
 - To enable/disable pause menu levels set: `PauseMenu.can_show = true `

@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 export (String, FILE, "*.tscn") var First_Level: String
+export (String, FILE, "*.tscn") var Credits: String
+
 
 func _ready()->void:
 	get_tree().get_nodes_in_group("MainMenu")[0].grab_focus()					#Godot doesn't have buttons auto grab_focus when noone has focus
@@ -26,8 +28,12 @@ func _on_Options_pressed()->void:
 func _on_Exit_pressed()->void:
 	Game.emit_signal("Exit")
 
+func _on_Credits_pressed():
+	Game.emit_signal("ChangeScene", Credits)
+
 #Localization
 func retranslate()->void:
 	find_node("NewGame").text = tr("NEW_GAME")
 	find_node("Options").text = tr("OPTIONS")
 	find_node("Exit").text = tr("EXIT")
+

@@ -17,7 +17,6 @@ var good_terrain = true
 
 
 func _ready():
-	print_debug(self)
 	connect("build_machine",get_parent(),"_on_build_machine")
 	self.set_position(get_global_mouse_position())
 
@@ -40,8 +39,8 @@ func _process(_delta):
 			pass
 
 func check_collision(map_object_index,map_index):
-	if $Area2D.get_overlapping_areas().size() != 0:
-		print_debug($Area2D.get_overlapping_areas())
+	# if $Area2D.get_overlapping_areas().size() != 0:
+		# print_debug($Area2D.get_overlapping_areas())
 	if moon_obj.get_cellv(map_object_index) == -1 and \
 		 moon.get_cellv(map_index) != -1 and \
 			$Area2D.get_overlapping_areas().size() == 0:

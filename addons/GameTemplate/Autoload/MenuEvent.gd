@@ -33,7 +33,6 @@ func set_paused(value:bool)->void:
 		var ghost = get_tree().get_root().find_node("GhostSprite", true, false)
 		if ghost != null:
 			ghost.queue_free()
-	print_debug(player)
 	emit_signal("Paused", Paused)
 
 func _ready()->void:

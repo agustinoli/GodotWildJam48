@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+func _unhandled_input(event):
+	if event.is_pressed():
+		Game.emit_signal('ChangeScene', \"res://MainMenu/MainMenu.tscn\")
+"
+
+[node name="Node2D" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 17.0
+margin_top = 19.0
+margin_right = 295.0
+margin_bottom = 158.0
+text = "Made by: 
+agustinoli, fuzilogik, Ripper302 and tsarquis
+Coding:
+tsarquis y agustinoli
+Graficos:
+fuzilogik
+SFX and Music:
+Ripper302 @valedealbera"
