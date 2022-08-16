@@ -6,19 +6,19 @@ const WATER_MACHINE   = 2
 const FOOD_MACHINE    = 3
 
 #                                      P  M    W  F
-const INITIAL_RESOURCES            = [ 0, 100, 0, 0 ]
+const INITIAL_RESOURCES            = [ 200, 200, 200, 200 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0 ]
 
 const RESOURCES_MAX                = [ 200, 200, 200 ,200 ]
 const RESOURCES_MIN                = [ -1, 0, 0 ,0 ]
 
-const POWER_MACHINE_STATIC_COST    = [ 0, 40, 0, 0 ]
+const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0 ]
 const POWER_MACHINE_DYNAMIC_COST   = [ 0, 0,  0, 0 ]
 const MINERAL_MACHINE_STATIC_COST  = [ 0, 20, 0, 0 ]
 const MINERAL_MACHINE_DYNAMIC_COST = [ 1, 0,  0, 0 ]
-const WATER_MACHINE_STATIC_COST    = [ 0, 100, 0, 0 ]
+const WATER_MACHINE_STATIC_COST    = [ 0, 50, 0, 0 ]
 const WATER_MACHINE_DYNAMIC_COST   = [ 5, 1,  0, 0 ]
-const FOOD_MACHINE_STATIC_COST     = [ 0, 50, 100, 0 ]
+const FOOD_MACHINE_STATIC_COST     = [ 0, 50, 30, 0 ]
 const FOOD_MACHINE_DYNAMIC_COST    = [ 1, 0,  0, 0 ]
 
 const POWER_MACHINE_DYNAMIC_GAIN   = [ 2, 0, 0, 0 ]
@@ -119,7 +119,7 @@ func _timer_callback():
 	if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 		gain_resources(resources_delta)
 	Hud.set_values(resources)
-	log_player_resources()
+#	log_player_resources()
 
 
 func log_player_resources():
