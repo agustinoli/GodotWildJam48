@@ -53,7 +53,7 @@ func make_ghost(machine):
 		ghost = ghostMachineScene.instance()
 		ghost.set_machine(machine)
 		ghost.set_position(get_local_mouse_position())
-		self.get_tree().get_current_scene().add_child(ghost)
+		self.get_tree().get_current_scene().add_child(ghost,true)
 
 
 func set_ghost_to_null():

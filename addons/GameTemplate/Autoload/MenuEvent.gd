@@ -27,6 +27,13 @@ func set_languages(value:bool)->void:
 func set_paused(value:bool)->void:
 	Paused = value
 	get_tree().paused = value
+	var player = get_tree().get_root().find_node("Player", true, false)
+	if player != null:
+		player.find_node("Idle",true,false).set_ghost_to_null()
+		var ghost = get_tree().get_root().find_node("GhostSprite", true, false)
+		if ghost != null:
+			ghost.queue_free()
+	print_debug(player)
 	emit_signal("Paused", Paused)
 
 func _ready()->void:

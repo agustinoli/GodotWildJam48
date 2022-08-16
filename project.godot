@@ -92,6 +92,10 @@ window/stretch/aspect="keep_height"
 
 enabled=PoolStringArray( "GameTemplate" )
 
+[global]
+
+gles=false
+
 [importer_defaults]
 
 texture={
@@ -239,6 +243,7 @@ translations=PoolStringArray(  )
 
 [rendering]
 
+quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_environment="res://default_env.tres"
