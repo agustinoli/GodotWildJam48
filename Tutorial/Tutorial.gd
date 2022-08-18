@@ -5,7 +5,7 @@ var msgs = [	"Hi! You are <ROBOT NAME> and\nyou are on the Moon.",
 				"You've been brought here with an objective.",
 				"We count our salvation on you, metallic friend.",
 				"Just terraform the Moon.\nEasy peasy.",
-				"Everything you need to know is in your notebook.\nPress <NOTEBOOK_KEY> for reading it.",
+				"Everything you need to know is in your notebook.\nPress 'N' for reading it.",
 				"...",
 				"Anyway, do it ASAP.",
 				"Bye-bye, butterfly!"

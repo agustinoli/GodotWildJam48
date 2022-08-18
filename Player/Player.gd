@@ -39,7 +39,7 @@ func get_animationSprite () -> Node:
 
 
 func _ready():
-	pass
+	$Notebook.visible = false
 
 func _process(_delta):
 	if Input.is_action_just_released("zoom_in"):
@@ -47,6 +47,11 @@ func _process(_delta):
 	elif Input.is_action_just_released("zoom_out"):
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
 
+func get_notebook_visibility():
+	return $Notebook.visible
+
+func set_notebook_visibility(new_visibility):
+	$Notebook.visible = new_visibility
 
 func parse_input():
 	pass

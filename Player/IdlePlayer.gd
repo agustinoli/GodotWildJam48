@@ -17,17 +17,23 @@ func fsm_update(_delta: float) -> void:
 		or Input.is_action_pressed("Right") or Input.is_action_pressed("Down"):
 		state_machine.transition_to("Move")
 	elif Input.is_action_just_pressed("BuildPowerMachine"):
+		player.set_notebook_visibility(false)
 		make_ghost(GameController.POWER_MACHINE)
 	elif Input.is_action_just_pressed("BuildMineralMachine"):
+		player.set_notebook_visibility(false)
 		make_ghost(GameController.MINERAL_MACHINE)
 	elif Input.is_action_just_pressed("BuildWaterMachine"):
+		player.set_notebook_visibility(false)
 		make_ghost(GameController.WATER_MACHINE)
 	elif Input.is_action_just_pressed("BuildFoodMachine"):
+		player.set_notebook_visibility(false)
 		make_ghost(GameController.FOOD_MACHINE)
 	elif Input.is_action_just_pressed("cancel_building"):
 			if ghost:
 				ghost.queue_free()
 				set_ghost_to_null()
+	elif Input.is_action_just_pressed("ShowNotebook"):
+		player.set_notebook_visibility(not player.get_notebook_visibility())
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
