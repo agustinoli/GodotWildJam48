@@ -23,20 +23,20 @@ func _exit_tree()->void:
 	PauseMenu.can_show = false
 
 func get_moon_floor_tilemap():
-	return $MoonFloor
+	return $YSort/MoonFloor
 
 func get_moon_floor_objects_tilemap():
-	return $MoonFloorObjects
+	return $YSort/MoonFloorObjects
 
 func get_terraformed_floor_tilemap():
-	return $TerraformedFloor
+	return $YSort/TerraformedFloor
 
 func get_terraformed_floor_objects_tilemap():
-	return $TerraformedFloorObjects
+	return $YSort/TerraformedFloorObjects
 
 func _on_build_machine(position :Vector2, machine_num: int):
 	var machine = machines_scenes[machine_num].instance()
-	add_child(machine)
+	$YSort.add_child(machine)
 	machine.init(position)
 	$Player/StateMachine/Idle.set_ghost_to_null()
 

@@ -13,6 +13,7 @@ var NextScene
 var loader: = ResourceAsyncLoader.new()
 
 func _ready()->void:
+	connect("NewGame", 		self, "on_NewGame")
 	connect("Exit",			self, "on_Exit")
 	connect("ChangeScene",	self, "on_ChangeScene")
 	connect("Restart", 		self, "restart_scene")
@@ -41,7 +42,13 @@ func switch_scene()->void: 														#handles actual scene change
 func restart_scene()->void:
 	if ScreenFade.state != ScreenFade.IDLE:
 		return
+	GameController.free_timer()
+	GameController.initialize()
 	get_tree().reload_current_scene()
+
+func on_NewGame():
+	GameController.free_timer()
+	GameController.initialize()
 
 
 func on_Exit()->void:

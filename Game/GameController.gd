@@ -33,18 +33,23 @@ const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
 
 var resources
 var resources_delta
+var timer
 
 func _ready():
-	resources       = INITIAL_RESOURCES
-	resources_delta = INITIAL_RESOURCES_DELTA
-	
-	var timer
+	initialize()
+
+
+func initialize():	
+	resources       = INITIAL_RESOURCES.duplicate()
+	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
 	timer = Timer.new()
 	timer.set_one_shot(false)
 	timer.set_wait_time(1)
+	print_debug(INITIAL_RESOURCES)
 	timer.connect("timeout", self, "_timer_callback")
 	timer.autostart = true
 	add_child(timer)
+	Hud.set_values(resources)
 
 
 func player_has_resources(wanted_resources)->bool:
@@ -86,6 +91,7 @@ func add_dynamic_gain(new_gain):
 	for res in 4:
 		resources_delta[res] += new_gain[res]
 
+
 func add_dynamic_cost(new_cost):
 	for res in 4:
 		resources_delta[res] -= new_cost[res]
@@ -119,7 +125,12 @@ func _timer_callback():
 	if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 		gain_resources(resources_delta)
 	Hud.set_values(resources)
-#	log_player_resources()
+	log_player_resources()
+
+
+func free_timer():
+	timer.disconnect("timeout",self,"_timer_callback")
+	timer.queue_free()
 
 
 func log_player_resources():
