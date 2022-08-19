@@ -26,8 +26,6 @@ func fsm_update(_delta: float) -> void:
 	player.parse_input()
 	if !Input.is_action_pressed("Left") and !Input.is_action_pressed("Up") and !Input.is_action_pressed("Right") and !Input.is_action_pressed("Down"):
 		state_machine.transition_to("Idle")
-	elif Input.is_action_just_pressed("ShowNotebook"):
-		player.set_notebook_visibility(not player.get_notebook_visibility())
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
@@ -53,7 +51,7 @@ func physics_update(_delta: float) -> void:
 	
 	player.collision = player.move_and_collide(move_direction * player.speed)
 	
-		
+	
 #	var animation = player.get_current_dir() + "Run"
 #	if animationSprite.get_animation() != animation:
 #		animationSprite.play(animation)

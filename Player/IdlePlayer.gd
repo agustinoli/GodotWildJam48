@@ -32,13 +32,11 @@ func fsm_update(_delta: float) -> void:
 			if ghost:
 				ghost.queue_free()
 				set_ghost_to_null()
-	elif Input.is_action_just_pressed("ShowNotebook"):
-		player.set_notebook_visibility(not player.get_notebook_visibility())
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:
-	pass
+	player.collision = player.move_and_collide(Vector2(0,0))
 
 
 # Virtual function. Called by the state machine upon changing the active state. The `msg` parameter

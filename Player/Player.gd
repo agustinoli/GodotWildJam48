@@ -50,18 +50,22 @@ func _process(_delta):
 		$Camera2D.set_zoom($Camera2D.get_zoom()+Vector2(0.1,0.1))
 	elif Input.is_action_just_released("zoom_out"):
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
+	elif Input.is_action_just_pressed("ShowNotebook"):
+		$Notebook.show()
+	elif Input.is_action_just_pressed("SwapNotebookPage") and $Notebook.visible:
+		$Notebook.swap_page()
 	
 	if collision != null:
-		if collision.collider.get_class() == "Machine" and Input.is_action_just_pressed("FinishBuild"):
-			collision.collider.finish_build()
-			self.power -= 10
+		if collision.collider.get_class() == "Machine":
+			if not collision.collider.is_builded():
+				if Input.is_action_just_pressed("FinishBuild"):
+					collision.collider.finish_build()
+					self.power -= 10
+					Hud.set_player_power(self.power)
+		if collision.collider.get_class() == "ChargeStation":
+			self.power = MAX_POWER
 			Hud.set_player_power(self.power)
 
-func get_notebook_visibility():
-	return $Notebook.visible
-
-func set_notebook_visibility(new_visibility):
-	$Notebook.visible = new_visibility
 
 func parse_input():
 	pass
