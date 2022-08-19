@@ -4,12 +4,17 @@ extends State
 
 onready var player = self.get_node('../../')
 onready var animationSprite = self.get_node('../../AnimatedSprite')
-
+onready var timer
 
 
 func _ready():
-	pass
-
+	timer = Timer.new()
+	timer.set_one_shot(false)
+	timer.set_wait_time(1)
+	timer.connect("timeout", self, "_timer_callback")
+	add_child(timer)
+	timer.start()
+	timer.set_paused(true)
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(_event: InputEvent) -> void:
@@ -52,7 +57,6 @@ func physics_update(_delta: float) -> void:
 #	if animationSprite.get_animation() != animation:
 #		animationSprite.play(animation)
 
-
 func direction2str(direction):
 	var angle = direction.angle()
 	if angle < 0:
@@ -63,14 +67,17 @@ func direction2str(direction):
 # Virtual function. Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	pass
+	timer.set_paused(false)
 
 # Virtual function. Called by the state machine before changing the active state. Use this function
 # to clean up the state.
 func exit() -> void:
-	pass
+	timer.set_paused(true)
 
-
-
-
-
+func _timer_callback():
+	player.power -= 1
+	if player.power < 1:
+		print_debug("perdiste")
+#		state_machine.transition_to("PowerOff")
+	timer.start()
+	Hud.set_player_power(player.power)
