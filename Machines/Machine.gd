@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 class_name Machine
 
@@ -14,6 +14,7 @@ func _ready():
 	smoke.amount = 10
 	smoke.scale = Vector2(0.5, 0.5)
 	add_child(smoke)
+	self.visible = true
 
 
 func init(init_pos):

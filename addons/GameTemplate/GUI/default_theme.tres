@@ -46,7 +46,7 @@ anti_aliasing = false
 
 [resource]
 default_font = ExtResource( 1 )
-TooltipLabel/colors/font_color = Color( 0, 0, 0, 0 )
+TooltipLabel/colors/font_color = Color( 0.588235, 0.0705882, 0.0705882, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 TooltipLabel/constants/shadow_offset_x = 1
 TooltipLabel/constants/shadow_offset_y = 1

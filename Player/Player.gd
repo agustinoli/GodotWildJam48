@@ -14,6 +14,8 @@ var directions = ["Right", "RightDown", "Down", "LeftDown", "Left", "LeftUp", "U
 var current_direction: String = "Down" setget set_current_dir, get_current_dir
 var facing = Vector2() setget set_facing, get_facing
 
+#onready var tween = get_tree().create_tween()
+
 func set_current_dir(new_dir: String):
 	current_direction = new_dir
 
@@ -39,12 +41,18 @@ func get_animationSprite () -> Node:
 
 
 func _ready():
+#	$Camera2D.limit_left 	= get_parent().find_node("Bg").margin_left
+#	$Camera2D.limit_right 	= get_parent().find_node("Bg").margin_right
+#	$Camera2D.limit_top 	= get_parent().find_node("Bg").margin_top
+#	$Camera2D.limit_bottom 	= get_parent().find_node("Bg").margin_bottom
 	pass
 
 func _process(_delta):
-	if Input.is_action_just_released("zoom_in"):
+	if Input.is_action_just_released("zoom_in"):		
+#		tween.tween_property($Camera2D, "zoom", $Camera2D.get_zoom()+Vector2(0.1,0.1) , 1)
 		$Camera2D.set_zoom($Camera2D.get_zoom()+Vector2(0.1,0.1))
 	elif Input.is_action_just_released("zoom_out"):
+#		tween.tween_property($Camera2D, "zoom", $Camera2D.get_zoom()-Vector2(0.1,0.1) , 1)
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
 
 
