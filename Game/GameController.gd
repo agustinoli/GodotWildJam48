@@ -99,25 +99,33 @@ func add_dynamic_cost(new_cost):
 		resources_delta[res] -= new_cost[res]
 
 
-func build_machine(machine_type):
+func pre_build_machine(machine_type):
 	match machine_type:
 		POWER_MACHINE:
 			spend_resources(POWER_MACHINE_STATIC_COST)
+		MINERAL_MACHINE:
+			spend_resources(MINERAL_MACHINE_STATIC_COST)
+		WATER_MACHINE:
+			spend_resources(WATER_MACHINE_STATIC_COST)
+		FOOD_MACHINE:
+			spend_resources(FOOD_MACHINE_STATIC_COST)
+
+
+func build_machine(machine_type):
+	match machine_type:
+		POWER_MACHINE:
 			gain_resources(POWER_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(POWER_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(POWER_MACHINE_DYNAMIC_GAIN)
 		MINERAL_MACHINE:
-			spend_resources(MINERAL_MACHINE_STATIC_COST)
 			gain_resources(MINERAL_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(MINERAL_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(MINERAL_MACHINE_DYNAMIC_GAIN)
 		WATER_MACHINE:
-			spend_resources(WATER_MACHINE_STATIC_COST)
 			gain_resources(WATER_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(WATER_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(WATER_MACHINE_DYNAMIC_GAIN)
 		FOOD_MACHINE:
-			spend_resources(FOOD_MACHINE_STATIC_COST)
 			gain_resources(FOOD_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)

@@ -13,6 +13,9 @@ var directions = ["Right", "RightDown", "Down", "LeftDown", "Left", "LeftUp", "U
 var current_direction: String = "Down" setget set_current_dir, get_current_dir
 var facing = Vector2() setget set_facing, get_facing
 
+var collision
+
+
 func set_current_dir(new_dir: String):
 	current_direction = new_dir
 
@@ -47,6 +50,12 @@ func _process(_delta):
 		$Camera2D.set_zoom($Camera2D.get_zoom()+Vector2(0.1,0.1))
 	elif Input.is_action_just_released("zoom_out"):
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
+	
+	if collision != null:
+		if collision.collider.get_class() == "Machine" and Input.is_action_just_pressed("FinishBuild"):
+			collision.collider.finish_build()
+			self.power -= 10
+			Hud.set_player_power(self.power)
 
 func get_notebook_visibility():
 	return $Notebook.visible

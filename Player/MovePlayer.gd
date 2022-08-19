@@ -51,8 +51,9 @@ func physics_update(_delta: float) -> void:
 	
 #	player.set_current_dir(direction2str(player.facing))
 	
-	player.move_and_collide(move_direction * player.speed)
+	player.collision = player.move_and_collide(move_direction * player.speed)
 	
+		
 #	var animation = player.get_current_dir() + "Run"
 #	if animationSprite.get_animation() != animation:
 #		animationSprite.play(animation)

@@ -31,7 +31,6 @@ func _process(_delta):
 	check_collision(map_object_index,map_index)
 	if Input.is_action_just_released("accept_building") and good_terrain:
 		if GameController.can_build_machine(machine):
-			GameController.build_machine(machine)
 			emit_signal("build_machine",position,machine)
 			queue_free()
 		else:
