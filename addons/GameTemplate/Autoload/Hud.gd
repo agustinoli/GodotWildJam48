@@ -24,8 +24,8 @@ func set_values(new_res):
 #		res_labels[i].set_text(new_res[i])
 	power.set_text(str(new_res[0]))
 	mineral.set_text(str(new_res[1]))
-	food.set_text(str(new_res[2]))
-	water.set_text(str(new_res[3]))
+	water.set_text(str(new_res[2]))
+	food.set_text(str(new_res[3]))
 	
 func set_player_power(new_value):
 	p_power.set_text(str(new_value))
