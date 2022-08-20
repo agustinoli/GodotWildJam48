@@ -60,6 +60,15 @@ size_flags_vertical = 0
 texture = ExtResource( 4 )
 stretch_mode = 3
 
+[node name="Label" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/MineralIcon"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 42.0
+margin_bottom = 33.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "M
+"
+
 [node name="MineralNum" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
 margin_left = 20.0
 margin_top = 3.0
@@ -82,6 +91,15 @@ margin_right = 68.0
 margin_bottom = 24.0
 texture = ExtResource( 5 )
 
+[node name="Label" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/PowerIcon"]
+margin_left = 4.0
+margin_top = 2.0
+margin_right = 44.0
+margin_bottom = 33.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "P
+"
+
 [node name="PowerNum" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
 margin_left = 72.0
 margin_top = 3.0
@@ -89,6 +107,7 @@ margin_right = 87.0
 margin_bottom = 21.0
 custom_fonts/font = ExtResource( 3 )
 text = "140"
+
 
 [node name="PowerDelta" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
 margin_left = 91.0
@@ -110,7 +129,7 @@ margin_top = 3.0
 margin_right = 139.0
 margin_bottom = 21.0
 custom_fonts/font = ExtResource( 3 )
-text = "120"
+text = "200"
 
 [node name="FoodDelta" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
 margin_left = 143.0
@@ -132,7 +151,7 @@ margin_top = 3.0
 margin_right = 191.0
 margin_bottom = 21.0
 custom_fonts/font = ExtResource( 3 )
-text = "200"
+text = "120"
 
 [node name="WaterDelta" type="Label" parent="CanvasLayer/GUI/MarginContainer/VBoxContainer/Top"]
 margin_left = 195.0

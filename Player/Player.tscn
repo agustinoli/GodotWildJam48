@@ -6,7 +6,7 @@
 [ext_resource path="res://fsm/stateMachine.gd" type="Script" id=4]
 [ext_resource path="res://Player/IdlePlayer.gd" type="Script" id=5]
 [ext_resource path="res://Player/BuildPlayer.gd" type="Script" id=6]
-[ext_resource path="res://addons/GameTemplate/Assets/Fonts/pixellocale_8_noborder.tres" type="DynamicFont" id=7]
+[ext_resource path="res://NoteBook/Notebook.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
@@ -47,34 +47,5 @@ script = ExtResource( 6 )
 [node name="Move" type="Node2D" parent="StateMachine"]
 script = ExtResource( 3 )
 
-[node name="Notebook" type="Area2D" parent="."]
-position = Vector2( 32, -66 )
-z_index = 1
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="ColorRect" type="ColorRect" parent="Notebook"]
-margin_right = 123.0
-margin_bottom = 150.0
-color = Color( 0, 0, 0, 1 )
-
-[node name="ColorRect" type="ColorRect" parent="Notebook/ColorRect"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 122.0
-margin_bottom = 149.0
-
-[node name="Label" type="Label" parent="Notebook/ColorRect/ColorRect"]
-margin_left = 1.0
-margin_right = 39.0
-margin_bottom = 14.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 7 )
-text = " - Terraform the moon -
-
-               Build
- 1 :   Power Machine
- 2 :   Mineral Machine
- 3 :   Water Machine
- 4 :   Food Machine"
+[node name="Notebook" parent="." instance=ExtResource( 7 )]
+position = Vector2( 33, -64 )
