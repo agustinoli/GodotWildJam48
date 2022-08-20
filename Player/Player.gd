@@ -6,6 +6,9 @@ signal hp_changed
 export var MAX_POWER = 100
 export var NORMAL_SPEED = 3
 
+const MIN_ZOOM = 0.5
+const MAX_ZOOM = 5.0
+
 var speed = NORMAL_SPEED
 var power = MAX_POWER
 
@@ -49,9 +52,13 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_released("zoom_in"):
-		$Camera2D.set_zoom($Camera2D.get_zoom()+Vector2(0.1,0.1))
+		var p_zoom = $Camera2D.get_zoom().x+0.1
+		p_zoom = clamp(p_zoom, MIN_ZOOM, MAX_ZOOM)
+		$Camera2D.set_zoom(Vector2(p_zoom,p_zoom))
 	elif Input.is_action_just_released("zoom_out"):
-		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
+		var p_zoom = $Camera2D.get_zoom().x-0.1
+		p_zoom = clamp(p_zoom, MIN_ZOOM, MAX_ZOOM)
+		$Camera2D.set_zoom(Vector2(p_zoom,p_zoom))
 	elif Input.is_action_just_pressed("ShowNotebook"):
 		$Notebook.show()
 	
