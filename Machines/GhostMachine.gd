@@ -29,6 +29,14 @@ func _process(_delta):
 	var map_index = moon.world_to_map(get_global_mouse_position())
 	self.set_position(parent.get_moon_floor_tilemap().map_to_world(map_index))
 	check_collision(map_object_index,map_index)
+	if Input.is_action_just_pressed("BuildPowerMachine"):
+		set_machine(GameController.POWER_MACHINE)
+	elif Input.is_action_just_pressed("BuildMineralMachine"):
+		set_machine(GameController.MINERAL_MACHINE)
+	elif Input.is_action_just_pressed("BuildWaterMachine"):
+		set_machine(GameController.WATER_MACHINE)
+	elif Input.is_action_just_pressed("BuildFoodMachine"):
+		set_machine(GameController.FOOD_MACHINE)
 	if Input.is_action_just_released("accept_building"):
 		if GameController.can_build_machine(machine) and good_terrain:
 			emit_signal("build_machine",position,machine)

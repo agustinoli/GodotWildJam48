@@ -92,3 +92,5 @@ script = ExtResource( 3 )
 
 [node name="Notebook" parent="." instance=ExtResource( 7 )]
 position = Vector2( 33, -64 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

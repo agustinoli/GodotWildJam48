@@ -41,6 +41,7 @@ func finish_build():
 		GameController.build_machine(self.machine_type)
 		$Body.modulate.a = 1
 		builded = true
+		SfxManager.play("build")
 		timer.disconnect("timeout", self, "_timer_callback")
 		timer.queue_free()
 

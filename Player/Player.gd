@@ -12,7 +12,7 @@ var power = MAX_POWER
 var directions = ["Right", "RightDown", "Down", "LeftDown", "Left", "LeftUp", "Up", "RightUp"]
 var current_direction: String = "Down" setget set_current_dir, get_current_dir
 var facing = Vector2() setget set_facing, get_facing
-
+var movement_sound = preload("res://Assets/Sounds/movement.wav")
 
 var collision
 
@@ -42,6 +42,7 @@ func get_animationSprite () -> Node:
 
 
 func _ready():
+	$AudioStreamPlayer.stream = movement_sound
 	$Notebook.visible = false
 	Hud.set_battery(power)
 
@@ -58,6 +59,10 @@ func _process(_delta):
 		if collision.collider.get_class() == "ChargeStation":
 			self.power = MAX_POWER
 			Hud.set_battery(self.power)
+
+
+func get_audio_stream():
+	return $AudioStreamPlayer
 
 
 func parse_input():
