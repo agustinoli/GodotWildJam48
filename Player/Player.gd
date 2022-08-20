@@ -55,12 +55,6 @@ func _process(_delta):
 		$Notebook.show()
 	
 	if collision != null:
-		if collision.collider.get_class() == "Machine":
-			if not collision.collider.is_builded():
-				if Input.is_action_just_pressed("FinishBuild"):
-					collision.collider.finish_build()
-					self.power -= 10
-					Hud.set_battery(self.power)
 		if collision.collider.get_class() == "ChargeStation":
 			self.power = MAX_POWER
 			Hud.set_battery(self.power)
