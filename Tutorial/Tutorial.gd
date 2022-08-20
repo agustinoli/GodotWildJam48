@@ -25,7 +25,7 @@ func _ready():
 
 
 func _input(event):
-	if event is InputEventKey and event.pressed:
+	if event.is_pressed():
 		next_msg()
 
 

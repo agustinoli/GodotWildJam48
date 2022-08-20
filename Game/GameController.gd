@@ -49,7 +49,7 @@ func initialize():
 	timer.connect("timeout", self, "_timer_callback")
 	timer.autostart = true
 	add_child(timer)
-	Hud.set_values(resources)
+	Hud.set_values(resources,resources_delta)
 
 
 func player_has_resources(wanted_resources)->bool:
@@ -124,7 +124,7 @@ func build_machine(machine_type):
 func _timer_callback():
 	if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 		gain_resources(resources_delta)
-	Hud.set_values(resources)
+	Hud.set_values(resources,resources_delta)
 	log_player_resources()
 
 
