@@ -75,9 +75,5 @@ func exit() -> void:
 	player.get_audio_stream().stop()
 
 func _timer_callback():
-	player.power -= 1
-	if player.power < 1:
-		print_debug("perdiste")
-#		state_machine.transition_to("PowerOff")
+	GameController.decrease_player_power(1)
 	timer.start()
-	Hud.set_battery(player.power)

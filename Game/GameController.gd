@@ -6,40 +6,44 @@ const WATER_MACHINE   = 2
 const FOOD_MACHINE    = 3
 
 #                                      P  M    W  F
-const INITIAL_RESOURCES            = [ 200, 200, 200, 200 ]
-const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0 ]
+const INITIAL_RESOURCES            = [ 200, 200, 200, 200, 0 ]
+const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0, 0 ]
 
-const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200 ]
-const RESOURCES_MIN                = [ -1, 0, 0 ,0 ]
+const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200, 5 ]
+const RESOURCES_MIN                = [ -1, 0, 0 ,0, 0 ]
 
-const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0 ]
-const POWER_MACHINE_DYNAMIC_COST   = [ 0, 0,  0, 0 ]
-const MINERAL_MACHINE_STATIC_COST  = [ 0, 20, 0, 0 ]
-const MINERAL_MACHINE_DYNAMIC_COST = [ 1, 0,  0, 0 ]
-const WATER_MACHINE_STATIC_COST    = [ 0, 50, 0, 0 ]
-const WATER_MACHINE_DYNAMIC_COST   = [ 5, 1,  0, 0 ]
-const FOOD_MACHINE_STATIC_COST     = [ 0, 50, 30, 0 ]
-const FOOD_MACHINE_DYNAMIC_COST    = [ 1, 0,  0, 0 ]
+const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0, 0 ]
+const POWER_MACHINE_DYNAMIC_COST   = [ 0, 0,  0, 0, 0 ]
+const MINERAL_MACHINE_STATIC_COST  = [ 0, 20, 0, 0, 0 ]
+const MINERAL_MACHINE_DYNAMIC_COST = [ 1, 0,  0, 0, 0 ]
+const WATER_MACHINE_STATIC_COST    = [ 0, 50, 0, 0, 0 ]
+const WATER_MACHINE_DYNAMIC_COST   = [ 5, 1,  0, 0, 0 ]
+const FOOD_MACHINE_STATIC_COST     = [ 0, 50, 30, 0, 0 ]
+const FOOD_MACHINE_DYNAMIC_COST    = [ 1, 0,  0, 0, 0 ]
 
-const POWER_MACHINE_DYNAMIC_GAIN   = [ 2, 0, 0, 0 ]
-const POWER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0 ]
-const MINERAL_MACHINE_DYNAMIC_GAIN = [ 0, 1, 0, 0 ]
-const MINERAL_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
-const WATER_MACHINE_DYNAMIC_GAIN   = [ 0, 0, 1, 0 ]
-const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0 ]
-const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1 ]
-const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
+const POWER_MACHINE_DYNAMIC_GAIN   = [ 2, 0, 0, 0, 0 ]
+const POWER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 0 ]
+const MINERAL_MACHINE_DYNAMIC_GAIN = [ 0, 1, 0, 0, 0 ]
+const MINERAL_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 0 ]
+const WATER_MACHINE_DYNAMIC_GAIN   = [ 0, 0, 1, 0, 0 ]
+const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 1 ]
+const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1, 0 ]
+const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 3 ]
 
 var resources_max
 var resources
 var resources_delta
 var timer
+var win
+var player_power
 
 func _ready():
 	initialize()
 
 
-func initialize():	
+func initialize():
+	win             = false
+	player_power    = 100
 	resources       = INITIAL_RESOURCES.duplicate()
 	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
 	resources_max   = INITIAL_MAX_RESOURCES
@@ -53,25 +57,41 @@ func initialize():
 	Hud.set_values(resources,resources_delta)
 
 
+func decrease_player_power(cant):
+	player_power -= cant
+	Hud.set_battery(player_power)
+	
+	if player_power < 90:
+		Game.emit_signal("ChangeScene","res://Outro/LoseScene.tscn")
+
+
+func player_recharge():
+	player_power = 100
+
+
+
 func player_has_resources(wanted_resources)->bool:
-	for res in 4:
+	for res in resources.size():
 		if wanted_resources[res] > resources[res]:
 			return false
 	return true
 
 
 func spend_resources(spended_resources)->void:
-	for res in 4:
+	for res in resources.size():
 		resources[res] -= spended_resources[res]
 		if(resources[res] < RESOURCES_MIN[res]):
 			resources[res] = RESOURCES_MIN[res]
 
 
 func gain_resources(gained_resources)->void:
-	for res in 4:
+	for res in resources.size():
 		resources[res] += gained_resources[res]
 		resources[res] = clamp(resources[res],RESOURCES_MIN[res],resources_max[res])
-
+	
+	if not win and resources[resources.size()-1] == INITIAL_MAX_RESOURCES[resources.size()-1]:
+		win = true
+		Game.emit_signal("ChangeScene","res://Outro/WinScene.tscn")
 
 
 func can_build_machine(machine_type):
@@ -87,12 +107,12 @@ func can_build_machine(machine_type):
 
 
 func add_dynamic_gain(new_gain):
-	for res in 4:
+	for res in resources.size():
 		resources_delta[res] += new_gain[res]
 
 
 func add_dynamic_cost(new_cost):
-	for res in 4:
+	for res in resources.size():
 		resources_delta[res] -= new_cost[res]
 
 
@@ -127,6 +147,7 @@ func build_machine(machine_type):
 			gain_resources(FOOD_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)
+	decrease_player_power(10)
 
 
 func _timer_callback():
@@ -142,8 +163,5 @@ func free_timer():
 
 
 func log_player_resources():
-	print(str(	"Power = ", resources[0], " (", resources_delta[0], "/s) | ",
-				"Mineral = ", resources[1], " (", resources_delta[1], "/s) | ",
-				"Water = ", resources[2], " (", resources_delta[2], "/s) | ",
-				"Food = ", resources[3], " (", resources_delta[3], "/s)"
-				))
+	print(str("Terraformation Index => ", resources[resources.size()-1], " | Player Power => ", player_power))
+
