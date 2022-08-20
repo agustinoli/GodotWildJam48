@@ -9,7 +9,7 @@ const FOOD_MACHINE    = 3
 const INITIAL_RESOURCES            = [ 200, 200, 200, 200, 0 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0, 0 ]
 
-const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200, 25 ]
+const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200, 5 ]
 const RESOURCES_MIN                = [ -1, 0, 0 ,0, 0 ]
 
 const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0, 0 ]
@@ -34,12 +34,16 @@ var resources_max
 var resources
 var resources_delta
 var timer
+var win
+var player_power
 
 func _ready():
 	initialize()
 
 
-func initialize():	
+func initialize():
+	win             = false
+	player_power    = 100
 	resources       = INITIAL_RESOURCES.duplicate()
 	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
 	resources_max   = INITIAL_MAX_RESOURCES
@@ -51,6 +55,19 @@ func initialize():
 	timer.autostart = true
 	add_child(timer)
 	Hud.set_values(resources,resources_delta)
+
+
+func decrease_player_power(cant):
+	player_power -= cant
+	Hud.set_battery(player_power)
+	
+	if player_power < 90:
+		Game.emit_signal("ChangeScene","res://Outro/LoseScene.tscn")
+
+
+func player_recharge():
+	player_power = 100
+
 
 
 func player_has_resources(wanted_resources)->bool:
@@ -72,8 +89,9 @@ func gain_resources(gained_resources)->void:
 		resources[res] += gained_resources[res]
 		resources[res] = clamp(resources[res],RESOURCES_MIN[res],resources_max[res])
 	
-	if resources[resources.size()-1] == INITIAL_MAX_RESOURCES[resources.size()-1]:
-		print("GANASTE!")
+	if not win and resources[resources.size()-1] == INITIAL_MAX_RESOURCES[resources.size()-1]:
+		win = true
+		Game.emit_signal("ChangeScene","res://Outro/WinScene.tscn")
 
 
 func can_build_machine(machine_type):
@@ -129,6 +147,7 @@ func build_machine(machine_type):
 			gain_resources(FOOD_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)
+	decrease_player_power(10)
 
 
 func _timer_callback():
@@ -144,5 +163,5 @@ func free_timer():
 
 
 func log_player_resources():
-	print(str("Terraformation Index => ", resources[resources.size()-1]))
+	print(str("Terraformation Index => ", resources[resources.size()-1], " | Player Power => ", player_power))
 

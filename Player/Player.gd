@@ -1,18 +1,12 @@
 extends KinematicBody2D
 
-
-signal hp_changed
-
-export var MAX_POWER = 100
 export var NORMAL_SPEED = 3
 
 var speed = NORMAL_SPEED
-var power = MAX_POWER
 
 var directions = ["Right", "RightDown", "Down", "LeftDown", "Left", "LeftUp", "Up", "RightUp"]
 var current_direction: String = "Down" setget set_current_dir, get_current_dir
 var facing = Vector2() setget set_facing, get_facing
-
 
 var collision
 
@@ -43,7 +37,6 @@ func get_animationSprite () -> Node:
 
 func _ready():
 	$Notebook.visible = false
-	Hud.set_battery(power)
 
 
 func _process(_delta):
@@ -56,8 +49,7 @@ func _process(_delta):
 	
 	if collision != null:
 		if collision.collider.get_class() == "ChargeStation":
-			self.power = MAX_POWER
-			Hud.set_battery(self.power)
+			GameController.player_recharge()
 
 
 func parse_input():

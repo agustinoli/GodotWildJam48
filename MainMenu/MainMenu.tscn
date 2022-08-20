@@ -119,7 +119,7 @@ shader_param/iMouse = Vector2( 0, 0 )
 [node name="MainMenu" type="CanvasLayer"]
 layer = 0
 script = ExtResource( 3 )
-First_Level = "res://Tutorial/Tutorial.tscn"
+First_Level = "res://Intro/Tutorial.tscn"
 Credits = "res://Credits/Credits.tscn"
 
 [node name="BG" type="Panel" parent="."]
