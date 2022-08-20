@@ -17,7 +17,7 @@ var visible: = false setget set_visible
 func _ready()->void:
 	gui.visible = visible
 	set_values(GameController.INITIAL_RESOURCES,GameController.INITIAL_RESOURCES_DELTA)
-  #set_battery()
+	set_battery(100)
 
 func set_visible(value: bool)->void:
 	visible = value
