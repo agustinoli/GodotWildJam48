@@ -9,7 +9,7 @@ const FOOD_MACHINE    = 3
 const INITIAL_RESOURCES            = [ 200, 200, 200, 200 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0 ]
 
-const RESOURCES_MAX                = [ 200, 200, 200 ,200 ]
+const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200 ]
 const RESOURCES_MIN                = [ -1, 0, 0 ,0 ]
 
 const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0 ]
@@ -30,7 +30,7 @@ const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0 ]
 const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1 ]
 const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0 ]
 
-
+var resources_max
 var resources
 var resources_delta
 var timer
@@ -42,13 +42,17 @@ func _ready():
 func initialize():	
 	resources       = INITIAL_RESOURCES.duplicate()
 	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
+	resources_max   = INITIAL_MAX_RESOURCES
+	resources       = INITIAL_RESOURCES
+	resources_delta = INITIAL_RESOURCES_DELTA
+	
 	timer = Timer.new()
 	timer.set_one_shot(false)
 	timer.set_wait_time(1)
 	timer.connect("timeout", self, "_timer_callback")
 	timer.autostart = true
 	add_child(timer)
-	Hud.set_values(resources)
+	Hud.set_values(resources,resources_delta)
 
 
 func player_has_resources(wanted_resources)->bool:
@@ -68,10 +72,8 @@ func spend_resources(spended_resources)->void:
 func gain_resources(gained_resources)->void:
 	for res in 4:
 		resources[res] += gained_resources[res]
-		if(resources[res] > RESOURCES_MAX[res]):
-			resources[res] = RESOURCES_MAX[res]
-		if(resources[res] < RESOURCES_MIN[res]): # Esto debido a los deltas
-			resources[res] = RESOURCES_MIN[res]
+		resources[res] = clamp(resources[res],RESOURCES_MIN[res],resources_max[res])
+
 
 
 func can_build_machine(machine_type):
@@ -96,25 +98,34 @@ func add_dynamic_cost(new_cost):
 		resources_delta[res] -= new_cost[res]
 
 
-func build_machine(machine_type):
+func pre_build_machine(machine_type):
 	match machine_type:
 		POWER_MACHINE:
 			spend_resources(POWER_MACHINE_STATIC_COST)
+		MINERAL_MACHINE:
+			spend_resources(MINERAL_MACHINE_STATIC_COST)
+		WATER_MACHINE:
+			spend_resources(WATER_MACHINE_STATIC_COST)
+		FOOD_MACHINE:
+			spend_resources(FOOD_MACHINE_STATIC_COST)
+	Hud.set_values(resources, resources_delta)
+
+
+func build_machine(machine_type):
+	match machine_type:
+		POWER_MACHINE:
 			gain_resources(POWER_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(POWER_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(POWER_MACHINE_DYNAMIC_GAIN)
 		MINERAL_MACHINE:
-			spend_resources(MINERAL_MACHINE_STATIC_COST)
 			gain_resources(MINERAL_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(MINERAL_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(MINERAL_MACHINE_DYNAMIC_GAIN)
 		WATER_MACHINE:
-			spend_resources(WATER_MACHINE_STATIC_COST)
 			gain_resources(WATER_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(WATER_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(WATER_MACHINE_DYNAMIC_GAIN)
 		FOOD_MACHINE:
-			spend_resources(FOOD_MACHINE_STATIC_COST)
 			gain_resources(FOOD_MACHINE_STATIC_GAIN)
 			add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
 			add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)
@@ -123,8 +134,8 @@ func build_machine(machine_type):
 func _timer_callback():
 	if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 		gain_resources(resources_delta)
-	Hud.set_values(resources)
-#	log_player_resources()
+	Hud.set_values(resources,resources_delta)
+	log_player_resources()
 
 
 func free_timer():

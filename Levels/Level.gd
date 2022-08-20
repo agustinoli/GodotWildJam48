@@ -11,7 +11,6 @@ var machines_scenes = [
 
 func _ready()->void:
 	Hud.visible = true
-	SfxManager.play("moon")
 	PauseMenu.can_show = true
 
 func _on_Button_pressed()->void:
@@ -36,7 +35,7 @@ func get_terraformed_floor_objects_tilemap():
 
 func _on_build_machine(position :Vector2, machine_num: int):
 	var machine = machines_scenes[machine_num].instance()
-	machine.init(position)
 	$YSort.add_child(machine)
+	machine.init(position, machine_num)
 	$Player/StateMachine/Idle.set_ghost_to_null()
 

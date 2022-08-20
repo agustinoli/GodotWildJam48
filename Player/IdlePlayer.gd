@@ -32,7 +32,7 @@ func fsm_update(_delta: float) -> void:
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:
-	pass
+	player.collision = player.move_and_collide(Vector2(0,0))
 
 
 # Virtual function. Called by the state machine upon changing the active state. The `msg` parameter

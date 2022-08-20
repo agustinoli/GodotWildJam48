@@ -3,18 +3,19 @@ extends KinematicBody2D
 
 signal hp_changed
 
-export var MAX_HP = 100
+export var MAX_POWER = 100
 export var NORMAL_SPEED = 3
-export var speed_boost_scale = 2
 
 var speed = NORMAL_SPEED
-var hp = MAX_HP
+var power = MAX_POWER
 
 var directions = ["Right", "RightDown", "Down", "LeftDown", "Left", "LeftUp", "Up", "RightUp"]
 var current_direction: String = "Down" setget set_current_dir, get_current_dir
 var facing = Vector2() setget set_facing, get_facing
 
-#onready var tween = get_tree().create_tween()
+
+var collision
+
 
 func set_current_dir(new_dir: String):
 	current_direction = new_dir
@@ -41,11 +42,9 @@ func get_animationSprite () -> Node:
 
 
 func _ready():
-#	$Camera2D.limit_left 	= get_parent().find_node("Bg").margin_left
-#	$Camera2D.limit_right 	= get_parent().find_node("Bg").margin_right
-#	$Camera2D.limit_top 	= get_parent().find_node("Bg").margin_top
-#	$Camera2D.limit_bottom 	= get_parent().find_node("Bg").margin_bottom
-	pass
+	$Notebook.visible = false
+	Hud.set_battery(power)
+
 
 func _process(_delta):
 	if Input.is_action_just_released("zoom_in"):		
@@ -54,6 +53,19 @@ func _process(_delta):
 	elif Input.is_action_just_released("zoom_out"):
 #		tween.tween_property($Camera2D, "zoom", $Camera2D.get_zoom()-Vector2(0.1,0.1) , 1)
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
+	elif Input.is_action_just_pressed("ShowNotebook"):
+		$Notebook.show()
+	
+	if collision != null:
+		if collision.collider.get_class() == "Machine":
+			if not collision.collider.is_builded():
+				if Input.is_action_just_pressed("FinishBuild"):
+					collision.collider.finish_build()
+					self.power -= 10
+					Hud.set_battery(self.power)
+		if collision.collider.get_class() == "ChargeStation":
+			self.power = MAX_POWER
+			Hud.set_battery(self.power)
 
 
 func parse_input():

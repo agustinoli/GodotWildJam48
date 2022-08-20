@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Images/Background/background.jpg" type="Texture" id=3]
 [ext_resource path="res://Assets/Images/Tiles/FloorTiles.tres" type="TileSet" id=4]
 [ext_resource path="res://Particles/Smoke.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ChargeStation/ChargeStation.tscn" type="PackedScene" id=6]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -117,3 +118,6 @@ randomness = 1.0
 position = Vector2( 144, 261 )
 scale = Vector2( 0.1, 0.1 )
 amount = 1
+
+[node name="ChargeStation" parent="." instance=ExtResource( 6 )]
+position = Vector2( 31, 118 )
