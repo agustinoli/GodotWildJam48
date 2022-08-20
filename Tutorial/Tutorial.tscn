@@ -1,19 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Tutorial/Tutorial.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/Player/LeftDown.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Images/Background/background.jpg" type="Texture" id=3]
 [ext_resource path="res://Assets/Images/Tiles/FloorTiles.tres" type="TileSet" id=4]
 [ext_resource path="res://Particles/Smoke.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Fonts/pixellocale_8.tres" type="DynamicFont" id=6]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
 
 [node name="Tutorial" type="Node2D"]
 script = ExtResource( 1 )
@@ -64,11 +56,6 @@ scale = Vector2( 0.1, 0.1 )
 amount = 1
 randomness = 0.14
 
-[node name="PlayerSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 198, 131 )
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 1 )
-
 [node name="Message" type="Label" parent="."]
 margin_left = 1.0
 margin_top = 1.0
@@ -77,3 +64,7 @@ margin_bottom = 62.0
 custom_fonts/font = ExtResource( 6 )
 align = 1
 valign = 1
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 202, 104 )
+texture = ExtResource( 2 )

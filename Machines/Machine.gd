@@ -27,11 +27,11 @@ func _ready():
 	add_child(timer)
 	connect("body_entered", self, "_body_entered")
 	connect("body_exited", self, "_body_exited")
+	self.visible = true
 
 
 func init(init_pos, machi_type):
 	self.position = init_pos
-	self.visible = true
 	self.machine_type = machi_type
 	GameController.pre_build_machine(self.machine_type)
 

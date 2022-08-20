@@ -47,11 +47,9 @@ func _ready():
 
 
 func _process(_delta):
-	if Input.is_action_just_released("zoom_in"):		
-#		tween.tween_property($Camera2D, "zoom", $Camera2D.get_zoom()+Vector2(0.1,0.1) , 1)
+	if Input.is_action_just_released("zoom_in"):
 		$Camera2D.set_zoom($Camera2D.get_zoom()+Vector2(0.1,0.1))
 	elif Input.is_action_just_released("zoom_out"):
-#		tween.tween_property($Camera2D, "zoom", $Camera2D.get_zoom()-Vector2(0.1,0.1) , 1)
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
 	elif Input.is_action_just_pressed("ShowNotebook"):
 		$Notebook.show()

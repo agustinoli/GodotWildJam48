@@ -44,16 +44,16 @@ func physics_update(_delta: float) -> void:
 	if move_direction.x != 0 and move_direction.y != 0:
 		move_direction.y /= 2
 
-#	if LEFT || RIGHT || UP || DOWN:
-#		player.set_facing(move_direction)
+	if LEFT || RIGHT || UP || DOWN:
+		player.set_facing(move_direction)
 	
-#	player.set_current_dir(direction2str(player.facing))
+	player.set_current_dir(direction2str(player.facing))
 	
 	player.collision = player.move_and_collide(move_direction * player.speed)
 	
-#	var animation = player.get_current_dir() + "Run"
-#	if animationSprite.get_animation() != animation:
-#		animationSprite.play(animation)
+	var animation = player.get_current_dir()
+	if animationSprite.get_animation() != animation:
+		animationSprite.play(animation)
 
 func direction2str(direction):
 	var angle = direction.angle()
