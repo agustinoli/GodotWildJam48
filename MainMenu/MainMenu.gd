@@ -19,16 +19,20 @@ func on_options(value:bool)->void:
 		get_tree().get_nodes_in_group("MainMenu")[0].grab_focus()
 
 func _on_NewGame_pressed()->void:
+	SfxManager.play("MenuMouse")
 	Game.emit_signal("NewGame")
 	Game.emit_signal("ChangeScene", First_Level)
 
 func _on_Options_pressed()->void:
+	SfxManager.play("MenuMouse")
 	MenuEvent.Options = true
 
 func _on_Exit_pressed()->void:
+	SfxManager.play("MenuMouse")
 	Game.emit_signal("Exit")
 
 func _on_Credits_pressed():
+	SfxManager.play("MenuMouse")
 	Game.emit_signal("ChangeScene", Credits)
 
 #Localization

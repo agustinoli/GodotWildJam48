@@ -38,4 +38,5 @@ func _on_build_machine(position :Vector2, machine_num: int):
 	$YSort.add_child(machine)
 	machine.init(position, machine_num)
 	$Player/StateMachine/Idle.set_ghost_to_null()
+	SfxManager.play("PonerMaquina")
 

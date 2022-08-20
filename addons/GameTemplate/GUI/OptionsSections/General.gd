@@ -59,29 +59,36 @@ func _on_SFX_value_changed(value)->void:
 
 func _on_Fullscreen_pressed()->void:
 	SettingsResolution.Fullscreen = find_node("Fullscreen").pressed
+	SfxManager.play("MenuMouse")
 
 func _on_Borderless_pressed()->void:
 	SettingsResolution.Borderless = find_node("Borderless").pressed
+	SfxManager.play("MenuMouse")
 
 func _on_ScaleUp_pressed()->void:
 	SettingsResolution.Scale += 1
+	SfxManager.play("MenuMouse")
 
 func _on_ScaleDown_pressed()->void:
 	SettingsResolution.Scale -= 1
+	SfxManager.play("MenuMouse")
 
 func _on_Resized()->void:
 	set_resolution()
 
 func _on_Controls_pressed()->void:
 	MenuEvent.Controls = true
+	SfxManager.play("MenuMouse")
 
 func _on_Back_pressed()->void:
+	SfxManager.play("MenuMouse")
 	SettingsSaveLoad.save_settings()
 	MenuEvent.Options = false
 	if PauseMenu.can_show:
 		get_tree().get_nodes_in_group("Pause")[0].grab_focus()
 
 func _on_Languages_pressed()->void:
+	SfxManager.play("MenuMouse")
 	MenuEvent.Languages = true
 
 #EVENT SIGNALS
