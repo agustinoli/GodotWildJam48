@@ -1,14 +1,14 @@
 extends Node
 
-var msgs = [	"Hi! You are <ROBOT NAME> and\nyou are on the Moon.",
-				"Some crazy shit is happening\non Earth, you know?",
-				"You've been brought here with an objective.",
-				"We count our salvation on you, metallic friend.",
-				"Just terraform the Moon.\nEasy peasy.",
-				"Everything you need to know is in your notebook.\nPress 'N' for reading it.",
-				"...",
-				"Anyway, do it ASAP.",
-				"Bye-bye, butterfly!"
+var msgs = [	"TUTORIAL1",
+				"TUTORIAL2",
+				"TUTORIAL3",
+				"TUTORIAL4",
+				"TUTORIAL5",
+				"TUTORIAL6",
+				"TUTORIAL7",
+				"TUTORIAL8",
+				"TUTORIAL9"
 			]
 onready var msg_index = -1
 
