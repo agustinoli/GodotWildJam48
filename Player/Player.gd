@@ -52,8 +52,6 @@ func _process(_delta):
 		$Camera2D.set_zoom($Camera2D.get_zoom()-Vector2(0.1,0.1))
 	elif Input.is_action_just_pressed("ShowNotebook"):
 		$Notebook.show()
-	elif Input.is_action_just_pressed("SwapNotebookPage") and $Notebook.visible:
-		$Notebook.swap_page()
 	
 	if collision != null:
 		if collision.collider.get_class() == "Machine":

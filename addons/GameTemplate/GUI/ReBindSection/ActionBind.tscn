@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://addons/GameTemplate/Assets/Fonts/pixellocale_8.tres" type="DynamicFont" id=1]
 [ext_resource path="res://addons/GameTemplate/GUI/ReBindSection/AddActionStyle_Normal.tres" type="StyleBox" id=2]
 [ext_resource path="res://addons/GameTemplate/GUI/ReBindSection/AddActionStyle_Pressed.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GameTemplate/GUI/ReBindSection/AddActionStyle_Hover.tres" type="StyleBox" id=4]
@@ -12,6 +11,15 @@ content_margin_bottom = 2.0
 bg_color = Color( 0.14902, 0.168627, 0.266667, 1 )
 corner_detail = 1
 anti_aliasing = false
+
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://addons/GameTemplate/Assets/Fonts/pixellocale-v-1-4.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 5
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 7 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 4.0
@@ -46,12 +54,10 @@ custom_styles/panel = SubResource( 1 )
 margin_left = 8.0
 margin_right = 298.0
 margin_bottom = 18.0
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = SubResource( 6 )
 text = "Action"
 
-[node name="AddAction" type="Button" parent="HBoxContainer" groups=[
-"ContainerFocus",
-]]
+[node name="AddAction" type="Button" parent="HBoxContainer" groups=["ContainerFocus"]]
 margin_left = 298.0
 margin_right = 310.0
 margin_bottom = 20.0
@@ -61,7 +67,7 @@ custom_styles/pressed = ExtResource( 3 )
 custom_styles/focus = SubResource( 2 )
 custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )

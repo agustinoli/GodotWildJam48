@@ -109,6 +109,7 @@ func pre_build_machine(machine_type):
 			spend_resources(WATER_MACHINE_STATIC_COST)
 		FOOD_MACHINE:
 			spend_resources(FOOD_MACHINE_STATIC_COST)
+	Hud.set_values(resources)
 
 
 func build_machine(machine_type):
