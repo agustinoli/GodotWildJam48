@@ -49,7 +49,6 @@ func initialize():
 	timer = Timer.new()
 	timer.set_one_shot(false)
 	timer.set_wait_time(1)
-	print_debug(INITIAL_RESOURCES)
 	timer.connect("timeout", self, "_timer_callback")
 	timer.autostart = true
 	add_child(timer)
