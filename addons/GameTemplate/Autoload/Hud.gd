@@ -26,12 +26,12 @@ func set_visible(value: bool)->void:
 func set_values(new_res,new_deltas):
 	power.set_text(str(new_res[0]))
 	mineral.set_text(str(new_res[1]))
-	food.set_text(str(new_res[2]))
-	water.set_text(str(new_res[3]))
+	water.set_text(str(new_res[2]))
+	food.set_text(str(new_res[3]))
 	power_delta.set_text(str(new_deltas[0])+"/s")
 	mineral_delta.set_text(str(new_deltas[1])+"/s")
-	food_delta.set_text(str(new_deltas[2])+"/s")
-	water_delta.set_text(str(new_deltas[3])+"/s")
+	water_delta.set_text(str(new_deltas[2])+"/s")
+	food_delta.set_text(str(new_deltas[3])+"/s")
 	
 
 func set_battery(percentage):
