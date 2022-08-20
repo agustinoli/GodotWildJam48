@@ -78,4 +78,4 @@ func _timer_callback():
 		print_debug("perdiste")
 #		state_machine.transition_to("PowerOff")
 	timer.start()
-	#Hud.set_player_power(player.power)
+	Hud.set_battery(player.power)

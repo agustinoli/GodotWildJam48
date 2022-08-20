@@ -42,7 +42,7 @@ func get_animationSprite () -> Node:
 
 func _ready():
 	$Notebook.visible = false
-	#Hud.set_player_power(power)
+	Hud.set_battery(power)
 
 
 func _process(_delta):
@@ -59,10 +59,10 @@ func _process(_delta):
 				if Input.is_action_just_pressed("FinishBuild"):
 					collision.collider.finish_build()
 					self.power -= 10
-					#Hud.set_player_power(self.power)
+					Hud.set_battery(self.power)
 		if collision.collider.get_class() == "ChargeStation":
 			self.power = MAX_POWER
-			#Hud.set_player_power(self.power)
+			Hud.set_battery(self.power)
 
 
 func parse_input():
