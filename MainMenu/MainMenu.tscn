@@ -26,7 +26,7 @@ uniform float darkmatter = 0.100;
 uniform float distfading = 0.650;
 uniform float saturation = 0.750;
 
-uniform vec2 iResolution = vec2(192, 192);
+uniform vec2 iResolution = vec2(200, 200);
 uniform vec2 iMouse = vec2(0,0);
 
 float SCurve (float value) {
@@ -129,14 +129,17 @@ rect_pivot_offset = Vector2( -253, -34 )
 custom_styles/panel = SubResource( 1 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="BG"]
+anchor_right = 1.006
+anchor_bottom = 1.0
 margin_left = 1.0
 margin_top = -1.0
-margin_right = 322.0
-margin_bottom = 180.0
+margin_right = -0.920013
+size_flags_horizontal = 3
+size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="BG/ViewportContainer"]
-size = Vector2( 320, 180 )
+size = Vector2( 320, 181 )
 handle_input_locally = false
 render_target_update_mode = 3
 gui_disable_input = true

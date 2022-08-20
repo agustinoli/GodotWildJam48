@@ -43,8 +43,6 @@ func initialize():
 	resources       = INITIAL_RESOURCES.duplicate()
 	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
 	resources_max   = INITIAL_MAX_RESOURCES
-	resources       = INITIAL_RESOURCES
-	resources_delta = INITIAL_RESOURCES_DELTA
 	
 	timer = Timer.new()
 	timer.set_one_shot(false)
