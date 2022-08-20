@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Area2D
 
 class_name Machine
 
@@ -7,6 +7,7 @@ var smoke
 var machine_type
 var builded
 var timer
+var player_near
 
 func _ready():
 	self.visible = false
@@ -17,13 +18,15 @@ func _ready():
 	smoke.scale = Vector2(0.5, 0.5)
 	add_child(smoke)
 	builded = false
-	modulate.a = 0.5
+	$Body.modulate.a = 0.5
 	timer = Timer.new()
 	timer.set_one_shot(false)
 	timer.set_wait_time(0.5)
 	timer.connect("timeout", self, "_timer_callback")
 	timer.autostart = true
 	add_child(timer)
+	connect("body_entered", self, "_body_entered")
+	connect("body_exited", self, "_body_exited")
 
 
 func init(init_pos, machi_type):
@@ -36,7 +39,7 @@ func init(init_pos, machi_type):
 func finish_build():
 	if not builded:
 		GameController.build_machine(self.machine_type)
-		modulate.a = 1
+		$Body.modulate.a = 1
 		builded = true
 		timer.disconnect("timeout", self, "_timer_callback")
 		timer.queue_free()
@@ -51,7 +54,22 @@ func is_builded():
 
 
 func _timer_callback():
-	if self.modulate.a == 0.5:
-		self.modulate.a = 1
+	if $Body.modulate.a == 0.5:
+		$Body.modulate.a = 1
 	else:
-		self.modulate.a = 0.5
+		$Body.modulate.a = 0.5
+
+
+func _process(_delta):
+	if player_near and Input.is_action_just_pressed("FinishBuild"):
+		finish_build()
+	
+
+func _body_entered(body):
+	if body.get_name() == "Player":
+		player_near = true
+
+
+func _body_exited(body):
+	if body.get_name() == "Player":
+		player_near = false
