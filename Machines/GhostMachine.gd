@@ -29,13 +29,15 @@ func _process(_delta):
 	var map_index = moon.world_to_map(get_global_mouse_position())
 	self.set_position(parent.get_moon_floor_tilemap().map_to_world(map_index))
 	check_collision(map_object_index,map_index)
-	if Input.is_action_just_released("accept_building") and good_terrain:
-		if GameController.can_build_machine(machine):
+	if Input.is_action_just_released("accept_building"):
+		if GameController.can_build_machine(machine) and good_terrain:
+			GameController.build_machine(machine)
 			emit_signal("build_machine",position,machine)
 			queue_free()
 		else:
-#			SfxManager.play("file_name_without_extension")
-			pass
+			SfxManager.play("wrong")
+
+
 
 func check_collision(map_object_index,map_index):
 	# if $Area2D.get_overlapping_areas().size() != 0:
