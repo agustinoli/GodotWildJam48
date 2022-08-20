@@ -38,6 +38,4 @@ func set_battery(percentage):
 	pass
 #	mmm parece qe no es rec_clip_content
 #	battery.rect_clip_content(battery.rect_size()/2)
-	
-func set_player_power(new_value):
-	p_power.set_text(str(new_value))
+

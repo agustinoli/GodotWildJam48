@@ -51,7 +51,6 @@ func physics_update(_delta: float) -> void:
 	
 	player.collision = player.move_and_collide(move_direction * player.speed)
 	
-	
 #	var animation = player.get_current_dir() + "Run"
 #	if animationSprite.get_animation() != animation:
 #		animationSprite.play(animation)
@@ -79,4 +78,4 @@ func _timer_callback():
 		print_debug("perdiste")
 #		state_machine.transition_to("PowerOff")
 	timer.start()
-	Hud.set_player_power(player.power)
+	#Hud.set_player_power(player.power)
