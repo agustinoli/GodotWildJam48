@@ -12,6 +12,7 @@ func _ready()->void:
 		$"BG/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/Exit".visible = false
 	#Localization
 	SettingsLanguage.connect("ReTranslate", self, "retranslate")
+	SettingsResolution.set_fullscreen(true)
 	retranslate()
 
 func on_options(value:bool)->void:
