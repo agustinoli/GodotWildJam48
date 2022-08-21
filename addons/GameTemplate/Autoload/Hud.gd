@@ -9,6 +9,7 @@ onready var power_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/Po
 onready var food_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/FoodDelta
 onready var water_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/WaterDelta
 onready var battery: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/BatteryNum
+onready var terra: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/TerraIndexNum
 onready var gui: = $CanvasLayer/GUI
 onready var res_labels = [power,mineral,food,water]
 
@@ -32,6 +33,7 @@ func set_values(new_res,new_deltas):
 	mineral.set_text(str(new_res[1]))
 	water.set_text(str(new_res[2]))
 	food.set_text(str(new_res[3]))
+	terra.set_text(str(new_res[4]))
 	power_delta.set_text(str(new_deltas[0])+"/s")
 	mineral_delta.set_text(str(new_deltas[1])+"/s")
 	water_delta.set_text(str(new_deltas[2])+"/s")
@@ -40,3 +42,5 @@ func set_values(new_res,new_deltas):
 func set_battery(value):
 	battery.set_text(str(value)+"%")
 
+
+	
