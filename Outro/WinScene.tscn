@@ -111,3 +111,7 @@ offset = Vector2( 16, 6 )
 position = Vector2( 306, 235 )
 texture = ExtResource( 9 )
 offset = Vector2( 16, 6 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 240, 135 )
+current = true
