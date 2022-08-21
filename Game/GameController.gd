@@ -1,6 +1,8 @@
 extends Node
 
 signal game_finished
+signal battery_warning
+signal power_warning
 
 const POWER_MACHINE   = 0
 const MINERAL_MACHINE = 1
@@ -32,7 +34,8 @@ const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 1 ]
 const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1, 0 ]
 const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 3 ]
 
-const INITIAL_POWER = 40
+const INITIAL_POWER = 50
+const POWER_WARNING = 20
 
 var resources_max
 var resources
@@ -42,6 +45,7 @@ var win
 var finished
 var player_power
 var outro
+var power_warning
 
 
 func _ready():
@@ -49,6 +53,7 @@ func _ready():
 
 
 func initialize():
+	power_warning   = false
 	outro           = false
 	win             = false
 	finished        = false
@@ -71,7 +76,7 @@ func decrease_player_power(cant):
 		player_power -= cant
 		Hud.set_battery(player_power)
 		
-		if player_power < 10:
+		if player_power < 0:
 			finished = true
 			timer.set_wait_time(5)
 			timer.stop()
@@ -79,6 +84,8 @@ func decrease_player_power(cant):
 			self.disconnect("timeout", self, "_timer_callback")
 			timer.connect("timeout", self, "_timer_finished_callback")
 			emit_signal("game_finished", false)
+		elif player_power < POWER_WARNING:
+			emit_signal("battery_warning")
 
 
 func player_recharge():
@@ -185,6 +192,14 @@ func _timer_callback():
 	if not finished:
 		if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 			gain_resources(resources_delta)
+		
+		if resources_delta[0] < 0:
+			emit_signal("power_warning", true)
+			power_warning = true
+		elif power_warning:
+			power_warning = false
+			emit_signal("power_warning", false)
+			
 		Hud.set_values(resources,resources_delta)
 		log_player_resources()
 
