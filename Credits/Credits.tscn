@@ -6,6 +6,9 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
+func _ready():
+	$Camera2D._set_current(true)
+
 func _unhandled_input(event):
 	if event.is_pressed():
 		Game.emit_signal('ChangeScene', \"res://MainMenu/MainMenu.tscn\")
@@ -166,3 +169,7 @@ SFX and Music:
 Ripper302 @valedealbera"
 align = 1
 valign = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 239.604, 137 )
+current = true

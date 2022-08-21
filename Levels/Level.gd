@@ -28,7 +28,7 @@ func get_moon_floor_objects_tilemap():
 	return $YSort/MoonFloorObjects
 
 func get_terraformed_floor_tilemap():
-	return $YSort/TerraformedFloor
+	return $TerraformedFloor
 
 func get_terraformed_floor_objects_tilemap():
 	return $YSort/TerraformedFloorObjects
