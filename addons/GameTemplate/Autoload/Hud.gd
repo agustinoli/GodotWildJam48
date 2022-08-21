@@ -33,7 +33,7 @@ func set_values(new_res,new_deltas):
 	mineral.set_text(str(new_res[1]))
 	water.set_text(str(new_res[2]))
 	food.set_text(str(new_res[3]))
-	terra.set_text(str(new_res[4]))
+	terra.set_text(str(new_res[4]+"/"+GameController.TERRA_INDEX_WIN))
 	power_delta.set_text(str(new_deltas[0])+"/s")
 	mineral_delta.set_text(str(new_deltas[1])+"/s")
 	water_delta.set_text(str(new_deltas[2])+"/s")
