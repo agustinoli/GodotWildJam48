@@ -46,6 +46,7 @@ var finished
 var player_power
 var outro
 var power_warning
+var battery_warning
 
 
 func _ready():
@@ -85,12 +86,16 @@ func decrease_player_power(cant):
 			timer.connect("timeout", self, "_timer_finished_callback")
 			emit_signal("game_finished", false)
 		elif player_power < POWER_WARNING:
-			emit_signal("battery_warning")
+			emit_signal("battery_warning", true)
+			battery_warning = true
 
 
 func player_recharge():
 	if not finished:
 		player_power = 100
+		if battery_warning:
+			emit_signal("battery_warning", false)
+			battery_warning = false
 
 
 func player_has_resources(wanted_resources)->bool:

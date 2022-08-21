@@ -79,8 +79,11 @@ func game_finished(won):
 		$Camera2D/Label.text = "CAMERA2"
 
 
-func battery_warning():
-	$Camera2D/Label.text = "CAMERA3"
+func battery_warning(warning):
+	if warning:
+		$Camera2D/Label.text = "CAMERA3"
+	else:
+		$Camera2D/Label.text = ""
 
 
 func power_warning(warning):
