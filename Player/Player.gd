@@ -40,6 +40,7 @@ func get_animationSprite () -> Node:
 
 
 func _ready():
+	GameController.connect("game_finished", self, "game_finished")
 	$AudioStreamPlayer.stream = movement_sound
 	$Notebook.visible = false
 
@@ -67,3 +68,10 @@ func get_audio_stream():
 
 func parse_input():
 	pass
+
+
+func game_finished(won):
+	if won:
+		$Camera2D/Label.text = "CAMERA1"
+	else:
+		$Camera2D/Label.text = "CAMERA2"

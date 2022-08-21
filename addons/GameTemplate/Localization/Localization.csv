@@ -31,12 +31,12 @@ DEFAULT,Default,Defecto
 USE_NEW_CONTROLS,Use new control!,Usar nuevos controles!
 CANCEL,Cancel,Cancelar
 LANGUAGES,Languages,Idiomas
-TUTORIAL1,"Hi! You are <ROBOT NAME> and\nyou are on the Moon.","Hola! Tu nombre es <NOMBRE_ROBOT> y\nte encuentras en la Luna".
+TUTORIAL1,"Hi! You are Bob, a terraforming-purpose robot,\nand you are on the Moon.","Hola! Tu nombre es Bob, un robot terraformador,\ny te encuentras en la Luna".
 TUTORIAL2,"Some crazy shit is happening\non Earth, you know?","Estan sucediendo cosas muy\nraras en la Tierra, lo sabías?"
 TUTORIAL3,"You've been brought here with an objective.","Has venido aqui con un objetivo."
 TUTORIAL4,"We count our salvation on you, metallic friend.","Contamos contigo para nuestra salvación,\namigo metálico."
 TUTORIAL5,"Just terraform the Moon.\nEasy peasy.","Solo tienes que terraformar la Luna.\nFacilito."
-TUTORIAL6,"Everything you need to know is in your notebook.\nPress 'N' for reading it.","Todo lo que tienes que saber se encuentra\nen tu libreta. Presiona 'N' para leerla."
+TUTORIAL6,"Everything you need to know is in your notebook.\nPress 'N' to read it.","Todo lo que tienes que saber se encuentra\nen tu libreta. Presiona 'N' para leerla."
 TUTORIAL7,"...","..."
 TUTORIAL8,"Anyway, do it ASAP.","Como te decía, hazlo cuanto antes."
 TUTORIAL9,"Bye-bye, butterfly!","Hasta lueguito!"
@@ -57,3 +57,5 @@ WIN4,"And don't get rusty, please.","Y no te oxides, por favor."
 LOS1,"You were our last hope, you piece of rust.","Eras nuestra única esperanza, pedazo de chatarra."
 LOS2,"Now we are all condemned to dead...","Ahora estamos todos condenados a la muerte..."
 LOS3,"... thanks to you.","... gracias a ti."
+CAMERA1,"Moon has been terraformed! Cheers!","La Luna ha sido terraformada! Viva!"
+CAMERA2,"Your battery is dead!\nYou were suposed to recharge it...","Tu batería está muerta!\nTendrías que haberla recargado..."

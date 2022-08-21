@@ -1,5 +1,7 @@
 extends Node
 
+signal game_finished
+
 const POWER_MACHINE   = 0
 const MINERAL_MACHINE = 1
 const WATER_MACHINE   = 2
@@ -30,21 +32,26 @@ const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 1 ]
 const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1, 0 ]
 const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 3 ]
 
-const INITIAL_POWER = 128
+const INITIAL_POWER = 40
 
 var resources_max
 var resources
 var resources_delta
 var timer
 var win
+var finished
 var player_power
+var outro
+
 
 func _ready():
 	initialize()
 
 
 func initialize():
+	outro           = false
 	win             = false
+	finished        = false
 	player_power    = INITIAL_POWER
 	resources       = INITIAL_RESOURCES.duplicate()
 	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
@@ -60,109 +67,143 @@ func initialize():
 
 
 func decrease_player_power(cant):
-	player_power -= cant
-	Hud.set_battery(player_power)
-	
-	if player_power < 10:
-		Game.emit_signal("ChangeScene","res://Outro/LoseScene.tscn")
+	if not finished:
+		player_power -= cant
+		Hud.set_battery(player_power)
+		
+		if player_power < 10:
+			finished = true
+			timer.set_wait_time(5)
+			timer.stop()
+			timer.start()
+			self.disconnect("timeout", self, "_timer_callback")
+			timer.connect("timeout", self, "_timer_finished_callback")
+			emit_signal("game_finished", false)
 
 
 func player_recharge():
-	player_power = 100
+	if not finished:
+		player_power = 100
 
 
 func player_has_resources(wanted_resources)->bool:
-	for res in resources.size():
-		if wanted_resources[res] > resources[res]:
-			return false
-	return true
+	if not finished:
+		for res in resources.size():
+			if wanted_resources[res] > resources[res]:
+				return false
+		return true
+	return false
 
 
 func spend_resources(spended_resources)->void:
-	for res in resources.size():
-		resources[res] -= spended_resources[res]
-		if(resources[res] < RESOURCES_MIN[res]):
-			resources[res] = RESOURCES_MIN[res]
+	if not finished:
+		for res in resources.size():
+			resources[res] -= spended_resources[res]
+			if(resources[res] < RESOURCES_MIN[res]):
+				resources[res] = RESOURCES_MIN[res]
 
 
 func gain_resources(gained_resources)->void:
-	for res in resources.size():
-		resources[res] += gained_resources[res]
-		resources[res] = clamp(resources[res],RESOURCES_MIN[res],resources_max[res])
-	
-	if not win and resources[resources.size()-1] == INITIAL_MAX_RESOURCES[resources.size()-1]:
-		win = true
-		Game.emit_signal("ChangeScene","res://Outro/WinScene.tscn")
+	if not finished:
+		for res in resources.size():
+			resources[res] += gained_resources[res]
+			resources[res] = clamp(resources[res],RESOURCES_MIN[res],resources_max[res])
+		
+		if not win and resources[resources.size()-1] == INITIAL_MAX_RESOURCES[resources.size()-1]:
+			win = true
+			finished = true
+			timer.set_wait_time(5)
+			timer.stop()
+			timer.start()
+			self.disconnect("timeout", self, "_timer_callback")
+			timer.connect("timeout", self, "_timer_finished_callback")
+			emit_signal("game_finished", true)
 
 
 func can_build_machine(machine_type):
-	match machine_type:
-		POWER_MACHINE:
-			return player_has_resources(POWER_MACHINE_STATIC_COST)
-		MINERAL_MACHINE:
-			return player_has_resources(MINERAL_MACHINE_STATIC_COST)
-		WATER_MACHINE:
-			return player_has_resources(WATER_MACHINE_STATIC_COST)
-		FOOD_MACHINE:
-			return player_has_resources(FOOD_MACHINE_STATIC_COST)
+	if not finished:
+		match machine_type:
+			POWER_MACHINE:
+				return player_has_resources(POWER_MACHINE_STATIC_COST)
+			MINERAL_MACHINE:
+				return player_has_resources(MINERAL_MACHINE_STATIC_COST)
+			WATER_MACHINE:
+				return player_has_resources(WATER_MACHINE_STATIC_COST)
+			FOOD_MACHINE:
+				return player_has_resources(FOOD_MACHINE_STATIC_COST)
 
 
 func add_dynamic_gain(new_gain):
-	for res in resources.size():
-		resources_delta[res] += new_gain[res]
+	if not finished:
+		for res in resources.size():
+			resources_delta[res] += new_gain[res]
 
 
 func add_dynamic_cost(new_cost):
-	for res in resources.size():
-		resources_delta[res] -= new_cost[res]
+	if not finished:
+		for res in resources.size():
+			resources_delta[res] -= new_cost[res]
 
 
 func pre_build_machine(machine_type):
-	match machine_type:
-		POWER_MACHINE:
-			spend_resources(POWER_MACHINE_STATIC_COST)
-		MINERAL_MACHINE:
-			spend_resources(MINERAL_MACHINE_STATIC_COST)
-		WATER_MACHINE:
-			spend_resources(WATER_MACHINE_STATIC_COST)
-		FOOD_MACHINE:
-			spend_resources(FOOD_MACHINE_STATIC_COST)
-	Hud.set_values(resources, resources_delta)
+	if not finished:
+		match machine_type:
+			POWER_MACHINE:
+				spend_resources(POWER_MACHINE_STATIC_COST)
+			MINERAL_MACHINE:
+				spend_resources(MINERAL_MACHINE_STATIC_COST)
+			WATER_MACHINE:
+				spend_resources(WATER_MACHINE_STATIC_COST)
+			FOOD_MACHINE:
+				spend_resources(FOOD_MACHINE_STATIC_COST)
+		Hud.set_values(resources, resources_delta)
 
 
 func build_machine(machine_type):
-	match machine_type:
-		POWER_MACHINE:
-			gain_resources(POWER_MACHINE_STATIC_GAIN)
-			add_dynamic_cost(POWER_MACHINE_DYNAMIC_COST)
-			add_dynamic_gain(POWER_MACHINE_DYNAMIC_GAIN)
-		MINERAL_MACHINE:
-			gain_resources(MINERAL_MACHINE_STATIC_GAIN)
-			add_dynamic_cost(MINERAL_MACHINE_DYNAMIC_COST)
-			add_dynamic_gain(MINERAL_MACHINE_DYNAMIC_GAIN)
-		WATER_MACHINE:
-			gain_resources(WATER_MACHINE_STATIC_GAIN)
-			add_dynamic_cost(WATER_MACHINE_DYNAMIC_COST)
-			add_dynamic_gain(WATER_MACHINE_DYNAMIC_GAIN)
-		FOOD_MACHINE:
-			gain_resources(FOOD_MACHINE_STATIC_GAIN)
-			add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
-			add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)
-	decrease_player_power(10)
+	if not finished:
+		match machine_type:
+			POWER_MACHINE:
+				gain_resources(POWER_MACHINE_STATIC_GAIN)
+				add_dynamic_cost(POWER_MACHINE_DYNAMIC_COST)
+				add_dynamic_gain(POWER_MACHINE_DYNAMIC_GAIN)
+			MINERAL_MACHINE:
+				gain_resources(MINERAL_MACHINE_STATIC_GAIN)
+				add_dynamic_cost(MINERAL_MACHINE_DYNAMIC_COST)
+				add_dynamic_gain(MINERAL_MACHINE_DYNAMIC_GAIN)
+			WATER_MACHINE:
+				gain_resources(WATER_MACHINE_STATIC_GAIN)
+				add_dynamic_cost(WATER_MACHINE_DYNAMIC_COST)
+				add_dynamic_gain(WATER_MACHINE_DYNAMIC_GAIN)
+			FOOD_MACHINE:
+				gain_resources(FOOD_MACHINE_STATIC_GAIN)
+				add_dynamic_cost(FOOD_MACHINE_DYNAMIC_COST)
+				add_dynamic_gain(FOOD_MACHINE_DYNAMIC_GAIN)
+		decrease_player_power(10)
 
 
 func _timer_callback():
-	if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
-		gain_resources(resources_delta)
-	Hud.set_values(resources,resources_delta)
-	log_player_resources()
+	if not finished:
+		if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
+			gain_resources(resources_delta)
+		Hud.set_values(resources,resources_delta)
+		log_player_resources()
 
 
 func free_timer():
-	timer.disconnect("timeout",self,"_timer_callback")
-	timer.queue_free()
+	if not finished:
+		timer.disconnect("timeout",self,"_timer_callback")
+		timer.queue_free()
 
 
 func log_player_resources():
-	print(str("Terraformation Index => ", resources[resources.size()-1], " | Player Power => ", player_power))
+	if not finished:
+		print(str("Terraformation Index => ", resources[resources.size()-1], " | Player Power => ", player_power))
 
+
+func _timer_finished_callback():
+	if finished and not outro:
+		if win:
+			Game.emit_signal("ChangeScene","res://Outro/WinScene.tscn")
+		else:
+			Game.emit_signal("ChangeScene","res://Outro/LoseScene.tscn")
+		outro = true
