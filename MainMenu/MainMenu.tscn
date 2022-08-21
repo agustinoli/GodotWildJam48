@@ -142,13 +142,14 @@ anchor_right = 1.006
 anchor_bottom = 1.0
 margin_left = 1.0
 margin_top = -1.0
-margin_right = -0.920013
+margin_right = 238.12
+margin_bottom = 69.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="BG/ViewportContainer"]
-size = Vector2( 480, 271 )
+size = Vector2( 720, 340 )
 handle_input_locally = false
 render_target_update_mode = 3
 gui_disable_input = true

@@ -12,10 +12,10 @@ script = ExtResource( 1 )
 Next_Scene = "res://MainMenu/MainMenu.tscn"
 
 [node name="Bg" type="TextureRect" parent="."]
-margin_left = -1656.0
-margin_top = -682.0
-margin_right = 1837.0
-margin_bottom = 1008.0
+margin_left = -3149.0
+margin_top = -1688.0
+margin_right = 3539.0
+margin_bottom = 2310.0
 texture = ExtResource( 3 )
 stretch_mode = 2
 
