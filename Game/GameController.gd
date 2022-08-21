@@ -93,6 +93,7 @@ func decrease_player_power(cant):
 func player_recharge():
 	if not finished:
 		player_power = 100
+		Hud.set_battery(player_power)
 		if battery_warning:
 			emit_signal("battery_warning", false)
 			battery_warning = false
