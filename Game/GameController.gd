@@ -10,10 +10,12 @@ const WATER_MACHINE   = 2
 const FOOD_MACHINE    = 3
 const TERRA_INDEX_WIN = 10
 #                                      P  M    W  F
-const INITIAL_RESOURCES            = [ 200, 200, 200, 200, 0 ]
+const INITIAL_RESOURCES            = [ 0, 50, 0, 0, 0 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0, 0 ]
 
+
 const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200, TERRA_INDEX_WIN ]
+
 const RESOURCES_MIN                = [ -1, 0, 0 ,0, 0 ]
 
 const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0, 0 ]
@@ -33,6 +35,7 @@ const WATER_MACHINE_DYNAMIC_GAIN   = [ 0, 0, 1, 0, 0 ]
 const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 1 ]
 const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1, 0 ]
 const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 3 ]
+
 
 const INITIAL_POWER = 50
 const POWER_WARNING = 20
