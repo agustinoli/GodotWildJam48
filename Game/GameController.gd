@@ -71,7 +71,6 @@ func player_recharge():
 	player_power = 100
 
 
-
 func player_has_resources(wanted_resources)->bool:
 	for res in resources.size():
 		if wanted_resources[res] > resources[res]:
