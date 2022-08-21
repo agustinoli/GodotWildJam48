@@ -93,6 +93,7 @@ func decrease_player_power(cant):
 func player_recharge():
 	if not finished:
 		player_power = 100
+		Hud.set_battery(player_power)
 		if battery_warning:
 			emit_signal("battery_warning", false)
 			battery_warning = false
@@ -206,18 +207,12 @@ func _timer_callback():
 			emit_signal("power_warning", false)
 			
 		Hud.set_values(resources,resources_delta)
-		log_player_resources()
 
 
 func free_timer():
 	if not finished:
 		timer.disconnect("timeout",self,"_timer_callback")
 		timer.queue_free()
-
-
-func log_player_resources():
-	if not finished:
-		print(str("Terraformation Index => ", resources[resources.size()-1], " | Player Power => ", player_power))
 
 
 func _timer_finished_callback():
