@@ -41,6 +41,8 @@ func get_animationSprite () -> Node:
 
 func _ready():
 	GameController.connect("game_finished", self, "game_finished")
+	GameController.connect("battery_warning", self, "battery_warning")
+	GameController.connect("power_warning", self, "power_warning")
 	$AudioStreamPlayer.stream = movement_sound
 	$Notebook.visible = false
 
@@ -75,3 +77,17 @@ func game_finished(won):
 		$Camera2D/Label.text = "CAMERA1"
 	else:
 		$Camera2D/Label.text = "CAMERA2"
+
+
+func battery_warning(warning):
+	if warning:
+		$Camera2D/Label.text = "CAMERA3"
+	else:
+		$Camera2D/Label.text = ""
+
+
+func power_warning(warning):
+	if warning:
+		$Camera2D/Label.text = "CAMERA4"
+	else:
+		$Camera2D/Label.text = ""
