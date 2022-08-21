@@ -3,7 +3,7 @@ extends KinematicBody2D
 export var NORMAL_SPEED = 3
 
 const MIN_ZOOM = 0.5
-const MAX_ZOOM = 5.0
+const MAX_ZOOM = 3.0
 
 var speed = NORMAL_SPEED
 

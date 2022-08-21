@@ -14,10 +14,14 @@ onready var res_labels = [power,mineral,food,water]
 
 var visible: = false setget set_visible
 
+onready var bat_x = GameController.INITIAL_POWER
+
 func _ready()->void:
 	gui.visible = visible
+#	battery.set_region(true)
+#	battery.set_region_rect(Rect2(Vector2(0,0),Vector2(GameController.INITIAL_POWER,24)))
 	set_values(GameController.INITIAL_RESOURCES,GameController.INITIAL_RESOURCES_DELTA)
-	set_battery(100)
+	set_battery(GameController.INITIAL_POWER)
 
 func set_visible(value: bool)->void:
 	visible = value
@@ -32,10 +36,13 @@ func set_values(new_res,new_deltas):
 	mineral_delta.set_text(str(new_deltas[1])+"/s")
 	water_delta.set_text(str(new_deltas[2])+"/s")
 	food_delta.set_text(str(new_deltas[3])+"/s")
-	
 
-func set_battery(percentage):
+func set_battery(value):
 	pass
-#	mmm parece qe no es rec_clip_content
-#	battery.rect_clip_content(battery.rect_size()/2)
+#	var x = bat_x * value/GameController.INITIAL_POWER
+#	battery.set_region_rect(Rect2(0,0,x,battery.get_rect().size.y))
+#	print_debug(battery.texture.get_rid())
+#	battery.texture.draw_rect_region(battery.texture.get_rid(),
+#		Rect2(Vector2(0,0),Vector2(20,20)),
+#		Rect2(Vector2(0,0),Vector2(battery.texture.get_size())))
 

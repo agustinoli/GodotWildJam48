@@ -30,6 +30,8 @@ const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 1 ]
 const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1, 0 ]
 const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 3 ]
 
+const INITIAL_POWER = 128
+
 var resources_max
 var resources
 var resources_delta
@@ -43,10 +45,10 @@ func _ready():
 
 func initialize():
 	win             = false
-	player_power    = 100
+	player_power    = INITIAL_POWER
 	resources       = INITIAL_RESOURCES.duplicate()
 	resources_delta = INITIAL_RESOURCES_DELTA.duplicate()
-	resources_max   = INITIAL_MAX_RESOURCES
+	resources_max   = INITIAL_MAX_RESOURCES.duplicate()
 	
 	timer = Timer.new()
 	timer.set_one_shot(false)
@@ -61,7 +63,7 @@ func decrease_player_power(cant):
 	player_power -= cant
 	Hud.set_battery(player_power)
 	
-	if player_power < 90:
+	if player_power < 10:
 		Game.emit_signal("ChangeScene","res://Outro/LoseScene.tscn")
 
 

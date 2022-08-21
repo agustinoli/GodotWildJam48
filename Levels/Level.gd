@@ -22,7 +22,7 @@ func _exit_tree()->void:
 	PauseMenu.can_show = false
 
 func get_moon_floor_tilemap():
-	return $YSort/MoonFloor
+	return $MoonFloor
 
 func get_moon_floor_objects_tilemap():
 	return $YSort/MoonFloorObjects
@@ -37,6 +37,6 @@ func _on_build_machine(position :Vector2, machine_num: int):
 	var machine = machines_scenes[machine_num].instance()
 	machine.init(position, machine_num)
 	$YSort.add_child(machine)
-	$Player/StateMachine/Idle.set_ghost_to_null()
+	$YSort/Player/StateMachine/Idle.set_ghost_to_null()
 	SfxManager.play("PonerMaquina")
 
