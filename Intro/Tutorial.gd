@@ -15,6 +15,7 @@ onready var msg_index = -1
 var timer
 
 func _ready():
+	$Camera2D._set_current(true)
 	timer = Timer.new()
 	timer.set_one_shot(true)
 	timer.set_wait_time(10)

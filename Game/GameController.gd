@@ -1,17 +1,21 @@
 extends Node
 
 signal game_finished
+signal battery_warning
+signal power_warning
 
 const POWER_MACHINE   = 0
 const MINERAL_MACHINE = 1
 const WATER_MACHINE   = 2
 const FOOD_MACHINE    = 3
-
+const TERRA_INDEX_WIN = 10
 #                                      P  M    W  F
 const INITIAL_RESOURCES            = [ 0, 50, 0, 0, 0 ]
 const INITIAL_RESOURCES_DELTA      = [ 0, 0,   0, 0, 0 ]
 
-const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200, 15 ]
+
+const INITIAL_MAX_RESOURCES        = [ 200, 200, 200 ,200, TERRA_INDEX_WIN ]
+
 const RESOURCES_MIN                = [ -1, 0, 0 ,0, 0 ]
 
 const POWER_MACHINE_STATIC_COST    = [ 0, 30, 0, 0, 0 ]
@@ -32,7 +36,9 @@ const WATER_MACHINE_STATIC_GAIN    = [ 0, 0, 0, 0, 1 ]
 const FOOD_MACHINE_DYNAMIC_GAIN = [ 0, 0, 0, 1, 0 ]
 const FOOD_MACHINE_STATIC_GAIN  = [ 0, 0, 0, 0, 3 ]
 
-const INITIAL_POWER = 100
+
+const INITIAL_POWER = 50
+const POWER_WARNING = 20
 
 var resources_max
 var resources
@@ -42,6 +48,8 @@ var win
 var finished
 var player_power
 var outro
+var power_warning
+var battery_warning
 
 
 func _ready():
@@ -49,6 +57,7 @@ func _ready():
 
 
 func initialize():
+	power_warning   = false
 	outro           = false
 	win             = false
 	finished        = false
@@ -79,11 +88,18 @@ func decrease_player_power(cant):
 			self.disconnect("timeout", self, "_timer_callback")
 			timer.connect("timeout", self, "_timer_finished_callback")
 			emit_signal("game_finished", false)
+		elif player_power < POWER_WARNING:
+			emit_signal("battery_warning", true)
+			battery_warning = true
 
 
 func player_recharge():
 	if not finished:
 		player_power = 100
+		Hud.set_battery(player_power)
+		if battery_warning:
+			emit_signal("battery_warning", false)
+			battery_warning = false
 
 
 func player_has_resources(wanted_resources)->bool:
@@ -185,19 +201,21 @@ func _timer_callback():
 	if not finished:
 		if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 			gain_resources(resources_delta)
+		
+		if resources_delta[0] < 0:
+			emit_signal("power_warning", true)
+			power_warning = true
+		elif power_warning:
+			power_warning = false
+			emit_signal("power_warning", false)
+			
 		Hud.set_values(resources,resources_delta)
-		log_player_resources()
 
 
 func free_timer():
 	if not finished:
 		timer.disconnect("timeout",self,"_timer_callback")
 		timer.queue_free()
-
-
-func log_player_resources():
-	if not finished:
-		print(str("Terraformation Index => ", resources[resources.size()-1], " | Player Power => ", player_power))
 
 
 func _timer_finished_callback():

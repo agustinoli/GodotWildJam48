@@ -68,3 +68,7 @@ valign = 1
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 339, 227 )
 texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 242, 136 )
+current = true

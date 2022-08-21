@@ -8,7 +8,8 @@ onready var mineral_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/
 onready var power_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/PowerDelta
 onready var food_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/FoodDelta
 onready var water_delta: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/WaterDelta
-onready var battery: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/Barrita/BarritaAdentro
+onready var battery: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/BatteryNum
+onready var terra: = $CanvasLayer/GUI/MarginContainer/VBoxContainer/Top/TerraIndexNum
 onready var gui: = $CanvasLayer/GUI
 onready var res_labels = [power,mineral,food,water]
 
@@ -32,17 +33,14 @@ func set_values(new_res,new_deltas):
 	mineral.set_text(str(new_res[1]))
 	water.set_text(str(new_res[2]))
 	food.set_text(str(new_res[3]))
+	terra.set_text(str(new_res[4]+"/"+GameController.TERRA_INDEX_WIN))
 	power_delta.set_text(str(new_deltas[0])+"/s")
 	mineral_delta.set_text(str(new_deltas[1])+"/s")
 	water_delta.set_text(str(new_deltas[2])+"/s")
 	food_delta.set_text(str(new_deltas[3])+"/s")
 
 func set_battery(value):
-	pass
-#	var x = bat_x * value/GameController.INITIAL_POWER
-#	battery.set_region_rect(Rect2(0,0,x,battery.get_rect().size.y))
-#	print_debug(battery.texture.get_rid())
-#	battery.texture.draw_rect_region(battery.texture.get_rid(),
-#		Rect2(Vector2(0,0),Vector2(20,20)),
-#		Rect2(Vector2(0,0),Vector2(battery.texture.get_size())))
+	battery.set_text(str(value)+"%")
 
+
+	

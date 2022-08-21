@@ -18,8 +18,8 @@ func initialize():
 	set_music(load ("res://Assets/Music/MoonGameMusicBass.ogg")  ,4)
 	set_music(load ("res://Assets/Music/MoonGameMusicDrums.ogg") ,5)
 	start_playing()
-	set_volume(0,0)
-	set_volume(1,0)
+	set_volume(0,-10)
+	set_volume(1,-10)
 	
 
 
@@ -27,7 +27,7 @@ func start_playing():
 	for i in range(audio.size()):
 		audio[i].play()
 	for i in range(audio.size()):
-		set_volume(i,-2)
+		set_volume(i,-10)
 
 
 func set_music(music:Resource,val)->void:

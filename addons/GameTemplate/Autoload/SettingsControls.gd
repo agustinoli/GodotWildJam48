@@ -56,7 +56,7 @@ func get_button_data(event)->Dictionary:
 	return button_data
 
 
-#LOADING CONTROLS
+#LOADING CONTROLS 
 func set_input_data(inputs:Dictionary)->void:
 	for action_name in Actions:
 		ActionControls[action_name] = []
