@@ -61,3 +61,5 @@ CAMERA1,"Moon has begun it's terraformation!\nCheers!","La Luna ha comenzado su 
 CAMERA2,"Your battery is dead!\nYou were suposed to recharge it...","Tu batería está muerta!\nTendrías que haberla recargado..."
 CAMERA3,"You're running out of battery!","Te estás quedando sin batería!"
 CAMERA4,"You're running out of energy!\nConsider building power machines.","Te estas quedando sin electricidad!\nConsidera construir generadoras."
+CAMERA5,"Start by building a power machine!\nYou can press '1' to do this.","Comienza construyendo una generadora de energía!\nPara eso, presiona la tecla '1'."
+CAMERA6,"You've ran out of resources\nfor building new machines!","Te has quedado sin recursos para\nconstruir nuevas máquinas!"

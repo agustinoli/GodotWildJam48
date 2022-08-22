@@ -13,6 +13,7 @@ var facing = Vector2() setget set_facing, get_facing
 var movement_sound = preload("res://Assets/Sounds/movement.wav")
 
 var collision
+var timer
 
 
 func set_current_dir(new_dir: String):
@@ -45,6 +46,14 @@ func _ready():
 	GameController.connect("power_warning", self, "power_warning")
 	$AudioStreamPlayer.stream = movement_sound
 	$Notebook.visible = false
+	$Camera2D/Label.text = "CAMERA5"
+	timer = Timer.new()
+	timer.set_wait_time(5)
+	timer.stop()
+	timer.autostart = true
+	timer.start()
+	add_child(timer)
+	timer.connect("timeout", self, "start_message_timeout")
 
 
 func _process(_delta):
@@ -72,11 +81,14 @@ func parse_input():
 	pass
 
 
-func game_finished(won):
+func game_finished(won, battery_lose):
 	if won:
 		$Camera2D/Label.text = "CAMERA1"
 	else:
-		$Camera2D/Label.text = "CAMERA2"
+		if battery_lose:
+			$Camera2D/Label.text = "CAMERA2"
+		else:
+			$Camera2D/Label.text = "CAMERA6"
 
 
 func battery_warning(warning):
@@ -91,3 +103,10 @@ func power_warning(warning):
 		$Camera2D/Label.text = "CAMERA4"
 	else:
 		$Camera2D/Label.text = ""
+
+
+func start_message_timeout():
+	$Camera2D/Label.text = ""
+	timer.disconnect("timeout", self, "start_message_timeout")
+	timer.queue_free()
+
