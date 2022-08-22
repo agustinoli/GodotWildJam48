@@ -87,7 +87,7 @@ func decrease_player_power(cant):
 			timer.start()
 			self.disconnect("timeout", self, "_timer_callback")
 			timer.connect("timeout", self, "_timer_finished_callback")
-			emit_signal("game_finished", false)
+			emit_signal("game_finished", false, true)
 		elif player_power < POWER_WARNING:
 			emit_signal("battery_warning", true)
 			battery_warning = true
@@ -201,13 +201,23 @@ func _timer_callback():
 	if not finished:
 		if resources_delta[0] >= 0 or resources[0] >= 0: # Si hay deficit de looz, las maquinas no producen
 			gain_resources(resources_delta)
+		else:
+			if not can_build_any_machine():
+				finished = true
+				timer.set_wait_time(5)
+				timer.stop()
+				timer.start()
+				self.disconnect("timeout", self, "_timer_callback")
+				timer.connect("timeout", self, "_timer_finished_callback")
+				emit_signal("game_finished", false, false)
 		
-		if resources_delta[0] < 0:
-			emit_signal("power_warning", true)
-			power_warning = true
-		elif power_warning:
-			power_warning = false
-			emit_signal("power_warning", false)
+		if not finished:
+			if resources_delta[0] < 0:
+				emit_signal("power_warning", true)
+				power_warning = true
+			elif power_warning:
+				power_warning = false
+				emit_signal("power_warning", false)
 			
 		Hud.set_values(resources,resources_delta)
 
@@ -225,3 +235,11 @@ func _timer_finished_callback():
 		else:
 			Game.emit_signal("ChangeScene","res://Outro/LoseScene.tscn")
 		outro = true
+
+
+func can_build_any_machine():
+	for mach in 4:
+		if not can_build_machine(mach):
+			return false
+	return true
+	
